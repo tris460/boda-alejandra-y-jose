@@ -1,0 +1,83 @@
+<section id="registry" class="registry-section">
+    <h2 class="registry-title">{{ 'gifts.title' | translate }}</h2>
+    
+    <div class="message-section">
+      <p class="welcome-message">
+        {{ 'gifts.description' | translate}}
+      </p>
+      <p class="gratitude-message">
+        {{ 'gifts.note' | translate }}
+      </p>
+    </div>
+
+    <div class="tabs-container">
+      <div class="card-navigation">
+        <button class="nav-arrow left" (click)="previousTab()">
+          &#8249;
+        </button>
+        
+        <div class="card-info" [class.transitioning]="isTransitioning">
+          <div class="bank-section">
+            <img [src]="cards[activeTab].bankImage" [alt]="cards[activeTab].bankName" class="bank-logo">
+            <h3>{{ 'gifts.bank.title' | translate }}</h3>
+          </div>
+          
+          <div class="card-details">
+            <div class="detail-item">
+              <span class="label">{{ 'gifts.bank.name' | translate }}</span>
+              <div class="value-container">
+                <span class="value">{{ cards[activeTab].holder }}</span>
+                <button class="copy-btn" (click)="copyToClipboard(cards[activeTab].holder)">
+                  <img src="copy.png" alt="Copiar" class="copy-icon">
+                </button>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="label">{{ 'gifts.bank.number' | translate }}</span>
+              <div class="value-container">
+                <span class="value card-number">{{ cards[activeTab].number }}</span>
+                <button class="copy-btn" (click)="copyToClipboard(cards[activeTab].number)">
+                  <img src="copy.png" alt="Copiar" class="copy-icon">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="nav-arrow right" (click)="nextTab()">
+          &#8250;
+        </button>
+      </div>
+    </div>
+
+    <div class="envelope-rain-section">
+      <div class="envelope-card">
+        <div class="envelope-icon">
+          💌
+        </div>
+        <h3>{{ 'gifts.envelope.title' | translate }}</h3>
+        <p>{{ 'gifts.envelope.description' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="liverpool-section">
+      <div class="liverpool-card">
+        <img src="liverpool.png" alt="Liverpool" class="liverpool-logo">
+        <h3>{{ 'gifts.liverpool.title' | translate }}</h3>
+        <p>{{ 'gifts.liverpool.description' | translate }}</p>
+        <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51904388" 
+           target="_blank" 
+           class="liverpool-btn">
+          {{ 'gifts.liverpool.button' | translate }}
+        </a>
+      </div>
+    </div>
+
+    <div class="thank-you">
+      <p>{{ 'gifts.thanks' | translate }}</p>
+    </div>
+    
+    <div class="copy-toast" [class.show]="showCopyMessage">
+      {{ 'gifts.copy' | translate }}
+    </div>
+</section>

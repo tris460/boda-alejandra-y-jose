@@ -1,0 +1,126 @@
+<section id="rsvp" class="rsvp-section">
+  <div class="container">
+    <h2>{{ 'rsvp.title' | translate }}</h2>
+    <p class="rsvp-intro">{{ 'rsvp.description' | translate}}</p>
+    
+    <div class="loading-message" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <h3>{{ 'rsvp.sending' | translate }}</h3>
+      <p>{{ 'rsvp.wait' | translate }}</p>
+    </div>
+    
+    <div class="confirmation-message" *ngIf="showConfirmation">
+      <h3>{{ 'rsvp.thanks' | translate }}</h3>
+      <p>{{ 'rsvp.thanks.subtitle' | translate }}</p>
+      <button class="submit-btn" (click)="resetForm()">
+        {{ 'rsvp.send-another' | translate}}
+      </button>
+    </div>
+    
+    <form class="rsvp-form" (ngSubmit)="onSubmit()" *ngIf="!showConfirmation && !isLoading">
+      <div class="form-group">
+        <label for="name">{{ 'rsvp.name' | translate }}</label>
+        <input 
+          type="text" 
+          id="name" 
+          [(ngModel)]="formData.name" 
+          name="name" 
+          required 
+          placeholder="{{ 'rsvp.name.placeholder' | translate }}"
+          #nameField="ngModel"
+          [class.error]="isNameInvalid()"
+        >
+        <div class="error-message" *ngIf="isNameInvalid()">
+          {{ 'rsvp.needed' | translate }}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>{{ 'rsvp.attending' | translate }}</label>
+        <div class="radio-group" [class.error]="isAttendingInvalid()">
+          <label class="radio-option">
+            <input 
+              type="radio" 
+              [(ngModel)]="formData.attending" 
+              name="attending" 
+              value="true" 
+              required
+              #attendingField="ngModel"
+            >
+            <span class="radio-custom">
+              <img src="heart.svg" alt="" class="heart-icon">
+            </span>
+            {{ 'rsvp.yes' | translate }}
+          </label>
+          <label class="radio-option">
+            <input 
+              type="radio" 
+              [(ngModel)]="formData.attending" 
+              name="attending" 
+              value="false" 
+              required
+              #attendingField="ngModel"
+            >
+            <span class="radio-custom">
+              <img src="heart.svg" alt="" class="heart-icon">
+            </span>
+            {{ 'rsvp.no' | translate }}
+          </label>
+        </div>
+        <div class="error-message" *ngIf="isAttendingInvalid()">
+          {{ 'rsvp.needed' | translate }}
+        </div>
+      </div>
+      
+      <div class="form-group" *ngIf="formData.attending === 'true'">
+        <label>{{ 'rsvp.quantity'  | translate}}</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input 
+              type="radio" 
+              [(ngModel)]="formData.guests" 
+              name="guests" 
+              value="1" 
+              required
+            >
+            <span class="radio-custom">
+              <img src="heart.svg" alt="" class="heart-icon">
+            </span>
+            {{ 'rsvp.1' | translate}}
+          </label>
+          <label class="radio-option">
+            <input 
+              type="radio" 
+              [(ngModel)]="formData.guests" 
+              name="guests" 
+              value="2" 
+              required
+            >
+            <span class="radio-custom">
+              <img src="heart.svg" alt="" class="heart-icon">
+            </span>
+            {{ 'rsvp.2' | translate}}
+          </label>
+        </div>
+        <div class="error-message" *ngIf="isGuestsInvalid()">
+          {{ 'rsvp.needed' | translate}}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="message">{{ 'rsvp.message' | translate}}</label>
+        <textarea 
+          id="message" 
+          [(ngModel)]="formData.message" 
+          name="message" 
+          rows="4" 
+          placeholder="{{ 'rsvp.message.placeholder' | translate}}"
+        ></textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn" [disabled]="!isFormValid()">
+        {{ 'rsvp.confirm' | translate}}
+      </button>
+    </form>
+  </div>
+</section>

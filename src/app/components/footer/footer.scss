@@ -1,0 +1,78 @@
+.footer {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  padding: 40px 20px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-section h3 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.footer-section h4 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  margin: 0 0 15px 0;
+  color: var(--color-silver);
+}
+
+.footer-section p {
+  font-family: var(--font-text);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin: 5px 0;
+  opacity: 0.9;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(232, 232, 232, 0.2);
+  padding-top: 20px;
+}
+
+.footer-bottom p {
+  font-family: var(--font-text);
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .footer-section h3 {
+    font-size: 1.8rem;
+  }
+  
+  .footer-section h4 {
+    font-size: 1.2rem;
+  }
+}

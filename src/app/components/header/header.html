@@ -1,0 +1,36 @@
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <h1>Alejandra & José</h1>
+
+      <nav class="nav" [class.nav-open]="isMenuOpen">
+        <!-- <a href="#home" (click)="scrollTo('home')">{{ 'nav.home' | translate }}</a>
+        <a href="#details" (click)="scrollTo('details')">{{ 'nav.details' | translate }}</a>
+        <a href="#location" (click)="scrollTo('location')">{{ 'nav.location' | translate }}</a>
+        <a href="#dress-code" (click)="scrollTo('dress-code')">{{ 'nav.dress-code' | translate }}</a>
+        <a href="#registry" (click)="scrollTo('registry')">{{ 'nav.registry' | translate }}</a>
+        <a href="#rsvp" (click)="scrollTo('rsvp')">{{ 'nav.rsvp' | translate }}</a>
+        <a href="#contact" (click)="scrollTo('contact')">{{ 'nav.contact' | translate }}</a> -->
+        <div class="language-buttons">
+          <button class="lang-btn" [class.active]="translationService.getCurrentLanguage() === 'es'" (click)="changeLanguage('es')">
+            <img src="mx.png" alt="Español" class="flag-icon"> Esp
+          </button>
+          <button class="lang-btn" [class.active]="translationService.getCurrentLanguage() === 'en'" (click)="changeLanguage('en')">
+            <img src="us.png" alt="English" class="flag-icon"> Eng
+          </button>
+        </div>
+        <div class="heart-icon">♡</div>
+      </nav>
+    </div>
+    
+    <div class="header-actions">
+      <button class="menu-toggle" [class.menu-open]="isMenuOpen" (click)="toggleMenu()">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" [class.overlay-open]="isMenuOpen" (click)="closeMenu()"></div>

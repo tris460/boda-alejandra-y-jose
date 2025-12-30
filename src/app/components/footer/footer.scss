@@ -62,6 +62,44 @@
   font-style: italic;
 }
 
+.developer-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(216, 219, 224, 0.2);
+    
+    p {
+      font-size: 0.9rem;
+      margin: 0 0 15px 0;
+      color: #fff;
+      font-weight: 300;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+      
+      a {
+        color: #fff;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+          color: var(--color-black);
+          transform: scale(1.2);
+        }
+        
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;

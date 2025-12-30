@@ -69,8 +69,10 @@ export class Rsvp {
   sendToGoogleSheets(): void {
     this.isLoading = true;
     
-    const baseUrl = 'https://script.google.com/macros/s/AKfycbz256hgQax49klnR76Df_DebefOqvU5Epjxq-bbVTa7HeI07TiRl4iPU9mJ4RpzMxrLOg/exec';
+    // URL del Google Apps Script con tu ID real
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbza0VRlc7qsZx1FSFugk2Jl3VgRT9mUl1axVHqxqkIlORDd2d62zihzyUHxnLqmZsZT/exec';
     
+    // Preparar parámetros para GET
     const params = new URLSearchParams({
       nombre: this.formData.name,
       asistencia: this.formData.attending === 'true' ? 'Sí' : 'No',
@@ -79,23 +81,33 @@ export class Rsvp {
       fecha: new Date().toLocaleString('es-MX')
     });
     
-    const webhookUrl = `${baseUrl}?${params.toString()}`;
+    const fullUrl = `${scriptUrl}?${params.toString()}`;
     
-    fetch(webhookUrl, {
+    console.log('Enviando datos a:', fullUrl);
+    console.log('Datos:', {
+      nombre: this.formData.name,
+      asistencia: this.formData.attending === 'true' ? 'Sí' : 'No',
+      invitados: this.formData.attending === 'true' ? this.formData.guests || '1' : '0',
+      mensaje: this.formData.message || 'Sin mensaje'
+    });
+    
+    // Intentar con GET primero (más simple para debugging)
+    fetch(fullUrl, {
       method: 'GET',
       mode: 'no-cors'
     })
     .then(() => {
+      console.log('Respuesta enviada exitosamente');
       setTimeout(() => {
         this.isLoading = false;
         this.showConfirmation = true;
       }, 1500);
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error al enviar:', error);
       setTimeout(() => {
         this.isLoading = false;
-        this.showConfirmation = true;
+        this.showConfirmation = true; // Mostramos confirmación de todas formas
       }, 1500);
     });
   }

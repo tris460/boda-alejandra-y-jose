@@ -1,19 +1,4 @@
 <section id="details" class="details-section">
-  <div class="elegant-wave-top">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#2A3748;stop-opacity:0.8" />
-          <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.6" />
-          <stop offset="100%" style="stop-color:#2A3748;stop-opacity:0.8" />
-        </linearGradient>
-      </defs>
-      <path d="M0,0L48,10.7C96,21,192,43,288,37.3C384,32,480,0,576,0C672,0,768,32,864,37.3C960,43,1056,21,1152,10.7L1200,0L1200,120L0,120Z" fill="url(#waveGradient)" opacity="0.4"></path>
-      <path d="M0,0L50,16C100,32,200,64,300,69.3C400,75,500,53,600,48C700,43,800,53,900,58.7C1000,64,1100,64,1150,64L1200,64L1200,120L0,120Z" fill="url(#waveGradient)" opacity="0.7"></path>
-      <path d="M0,0L40,21.3C80,43,160,85,240,96C320,107,400,85,480,74.7C560,64,640,64,720,69.3C800,75,880,85,960,85.3C1040,85,1120,75,1160,69.3L1200,64L1200,120L0,120Z" fill="url(#waveGradient)"></path>
-    </svg>
-  </div>
-  
   <div class="elegant-music-player">
     <div class="music-controls">
       <button class="elegant-play-button" [class.playing]="isPlaying" (click)="toggleMusic()">
@@ -22,13 +7,13 @@
         </span>
       </button>
       <div class="music-info">
-        <span class="music-label">{{ 'details.our-song' | translate }}</span>
         <div class="music-visualizer" [class.active]="isPlaying">
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
         </div>
+        <span class="music-label">{{ 'details.our-song' | translate }}</span>
       </div>
     </div>
   </div>
@@ -40,20 +25,10 @@
       <div class="divider"></div>
     </div>
     
-    <div class="elegant-card wedding-details fade-in delay-1">
-      <div class="icon-container">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-        </svg>
-      </div>
-      <div class="wedding-date">
-        <h3 class="date-title">{{ 'details.date' | translate }}</h3>
-        <p class="wedding-time">7:00 PM</p>
-      </div>
-    </div>
     
     <div class="countdown-container fade-in delay-2">
-      <h3 class="countdown-title">{{ 'details.countdown-title' | translate }}</h3>
+      <!-- <h3 class="countdown-title">{{ 'details.countdown-title' | translate }}</h3> -->
+      <h3 class="date-title">{{ 'details.date' | translate }}</h3>
       <div class="elegant-countdown">
         <div class="countdown-item">
           <div class="countdown-circle">
@@ -93,11 +68,6 @@
       
       <div class="parents-grid">
         <div class="elegant-card parent-card">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-          </div>
           <h4 class="parent-title">{{ 'details.bride-parents' | translate }}</h4>
           <div class="parent-names">
             <p class="parent-name">Lirio Maria Martinez</p>
@@ -107,11 +77,6 @@
         </div>
         
         <div class="elegant-card parent-card">
-          <div class="icon-container">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-          </div>
           <h4 class="parent-title">{{ 'details.groom-parents' | translate }}</h4>
           <div class="parent-names">
             <p class="parent-name">Elisa Cabral</p>
@@ -124,10 +89,7 @@
     
     <div class="rings-showcase fade-in delay-4">
       <div class="rings-container">
-        <img src="rings.jpeg" alt="Anillos de boda" class="rings-image" loading="lazy">
-        <div class="rings-overlay">
-          <div class="ring-icon">💍</div>
-        </div>
+        <img src="foto1.jpeg" alt="Anillos de boda" class="rings-image" loading="lazy">
       </div>
     </div>
     

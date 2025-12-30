@@ -1,38 +1,7 @@
 <section id="gallery" class="gallery-section">
   <div class="container">
     <div class="gallery-container">
-      <div class="gallery-slide" [ngClass]="getSlideClass(0)">
-        <img src="ny.jpeg" alt="Nueva York" class="gallery-image">
-        <div class="slide-caption">
-          <h3>{{ 'gallery.ny.title' | translate }}</h3>
-          <p>{{ 'gallery.ny.description' | translate}}</p>
-        </div>
-      </div>
-      
-      <div class="gallery-slide" [ngClass]="getSlideClass(1)">
-        <img src="rd.jpeg" alt="República Dominicana" class="gallery-image">
-        <div class="slide-caption">
-          <h3>{{ 'gallery.rd.title' | translate }}</h3>
-          <p>{{ 'gallery.rd.description' | translate }}</p>
-        </div>
-      </div>
-      
-      <div class="gallery-slide" [ngClass]="getSlideClass(2)">
-        <img src="colombia.jpg" alt="Colombia" class="gallery-image">
-        <div class="slide-caption">
-          <h3>{{ 'gallery.co.title' | translate }}</h3>
-          <p>{{ 'gallery.co.description' | translate }}</p>
-        </div>
-      </div>
-      
-      <button class="nav-btn prev-btn" (click)="previousSlide()">‹</button>
-      <button class="nav-btn next-btn" (click)="nextSlide()">›</button>
-      
-      <div class="dots-container">
-        <span class="dot" [class.active]="currentSlide === 0" (click)="goToSlide(0)"></span>
-        <span class="dot" [class.active]="currentSlide === 1" (click)="goToSlide(1)"></span>
-        <span class="dot" [class.active]="currentSlide === 2" (click)="goToSlide(2)"></span>
-      </div>
+      <img src="foto3.jpeg" alt="Nueva York" class="gallery-image">
     </div>
   </div>
 </section>

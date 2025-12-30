@@ -14,10 +14,10 @@ export class Details implements AfterViewInit {
   private weddingDate = new Date('2026-05-02T19:00:00');
 
   constructor() {
-    this.audio = new Audio('Sweet Child O Mine.mp3');
+    this.audio = new Audio('Ordinary.mp3');
     this.audio.loop = true;
     this.audio.volume = 0.5;
-    this.audio.currentTime = 14;
+    this.audio.currentTime = 1;
     
     this.updateCountdown();
     setInterval(() => this.updateCountdown(), 1000);

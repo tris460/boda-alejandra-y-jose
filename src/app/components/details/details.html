@@ -1,4 +1,27 @@
 <section id="details" class="details-section">
+  <!-- Elementos decorativos de fondo -->
+  <div class="background-decorations">
+    <div class="floating-ornament ornament-1">
+      <div class="ornament-inner"></div>
+    </div>
+    <div class="floating-ornament ornament-2">
+      <div class="ornament-inner"></div>
+    </div>
+    <div class="floating-ornament ornament-3">
+      <div class="ornament-inner"></div>
+    </div>
+    <div class="floating-ornament ornament-4">
+      <div class="ornament-inner"></div>
+    </div>
+    <div class="geometric-pattern pattern-1"></div>
+    <div class="geometric-pattern pattern-2"></div>
+    <div class="elegant-lines">
+      <div class="line line-1"></div>
+      <div class="line line-2"></div>
+      <div class="line line-3"></div>
+    </div>
+  </div>
+
   <div class="elegant-music-player">
     <div class="music-controls">
       <button class="elegant-play-button" [class.playing]="isPlaying" (click)="toggleMusic()">
@@ -68,6 +91,8 @@
       
       <div class="parents-grid">
         <div class="elegant-card parent-card">
+          <div class="decorative-element top-left"></div>
+          <div class="decorative-element bottom-right"></div>
           <h4 class="parent-title">{{ 'details.bride-parents' | translate }}</h4>
           <div class="parent-names">
             <p class="parent-name">Lirio Maria Martinez</p>
@@ -77,6 +102,8 @@
         </div>
         
         <div class="elegant-card parent-card">
+          <div class="decorative-element top-left"></div>
+          <div class="decorative-element bottom-right"></div>
           <h4 class="parent-title">{{ 'details.groom-parents' | translate }}</h4>
           <div class="parent-names">
             <p class="parent-name">Elisa Cabral</p>

@@ -37,7 +37,7 @@
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
   background: rgba(42, 55, 72, 0.8);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  border: 1px solid var(--gold-secondary);
   border-radius: var(--radius-xl);
   box-shadow: 0 8px 25px var(--shadow-dark);
 }
@@ -53,7 +53,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 6px 20px var(--gold-secondary);
   position: relative;
   overflow: hidden;
 }
@@ -71,7 +71,7 @@
 
 .elegant-play-button:hover {
   transform: scale(1.1);
-  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+  box-shadow: 0 8px 30px var(--gold-secondary);
 }
 
 .elegant-play-button:hover::before {
@@ -325,7 +325,7 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 0 20px 50px var(--shadow-dark);
-  border: 2px solid rgba(212, 175, 55, 0.3);
+  border: 2px solid var(--gold-secondary);
 }
 
 .rings-image {

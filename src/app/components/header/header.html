@@ -4,13 +4,6 @@
       <h1>Alejandra & José</h1>
 
       <nav class="nav" [class.nav-open]="isMenuOpen">
-        <!-- <a href="#home" (click)="scrollTo('home')">{{ 'nav.home' | translate }}</a>
-        <a href="#details" (click)="scrollTo('details')">{{ 'nav.details' | translate }}</a>
-        <a href="#location" (click)="scrollTo('location')">{{ 'nav.location' | translate }}</a>
-        <a href="#dress-code" (click)="scrollTo('dress-code')">{{ 'nav.dress-code' | translate }}</a>
-        <a href="#registry" (click)="scrollTo('registry')">{{ 'nav.registry' | translate }}</a>
-        <a href="#rsvp" (click)="scrollTo('rsvp')">{{ 'nav.rsvp' | translate }}</a>
-        <a href="#contact" (click)="scrollTo('contact')">{{ 'nav.contact' | translate }}</a> -->
         <div class="language-buttons">
           <button class="lang-btn" [class.active]="translationService.getCurrentLanguage() === 'es'" (click)="changeLanguage('es')">
             <img src="mx.png" alt="Español" class="flag-icon"> Esp

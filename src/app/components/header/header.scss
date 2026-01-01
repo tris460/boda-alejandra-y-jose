@@ -1,11 +1,11 @@
 .header {
-  background: var(--accent-bg);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(134, 151, 159, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
   width: 100%;
   margin: 0;
   padding: 0;
@@ -26,11 +26,11 @@
 .logo h1 {
   color: var(--text-light);
   font-family: var(--font-script);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 600;
   margin: 0;
   letter-spacing: 1px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .header-actions {
@@ -45,7 +45,7 @@
   left: 0;
   width: 100%;
   height: calc(100vh - 70px);
-  background-color: rgba(42, 55, 72, 0.8);
+  background-color: rgba(134, 151, 159, 0.8);
   backdrop-filter: blur(5px);
   z-index: 998;
   opacity: 0;
@@ -63,9 +63,9 @@
   top: 70px;
   left: 0;
   width: 100%;
-  background: rgba(52, 69, 90, 0.95);
+  background: rgba(134, 151, 159, 0.95);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,7 +80,7 @@
 }
 
 .nav.nav-open {
-  max-height: 700px;
+  max-height: 500px;
   opacity: 1;
 }
 
@@ -89,9 +89,9 @@
   font-family: var(--font-text);
   text-decoration: none;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
-  padding: 15px 20px;
+  padding: 12px 18px;
   text-align: center;
   position: relative;
   display: inline-block;
@@ -106,83 +106,81 @@
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold-secondary), var(--gold-primary), var(--gold-secondary));
+  height: 1px;
+  background: var(--gold-primary);
   transition: width 0.3s ease;
 }
 
 .nav a:hover {
-  color: var(--text-light);
-  transform: translateY(-2px);
+  color: var(--gold-primary);
+  transform: translateY(-1px);
 }
 
 .nav a:hover::after {
-  width: calc(100% - 30px);
+  width: calc(100% - 20px);
 }
 
 .language-buttons {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-top: 10px;
 }
 
 .lang-btn {
   background: transparent;
   border: 1px solid var(--gold-primary);
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 1.1rem;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
   color: var(--text-light);
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-text);
   font-weight: 400;
 }
 
 .flag-icon {
-  width: 20px;
-  height: 15px;
+  width: 18px;
+  height: 13px;
   object-fit: cover;
   border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .lang-btn:hover {
   background: var(--gold-primary);
-  color: var(--text-light);
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  color: var(--primary-bg);
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 .lang-btn.active {
   background: var(--gold-primary);
-  color: var(--color-black);
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  color: var(--primary-bg);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 .heart-icon {
-  font-size: 1.5rem;
-  margin-top: 10px;
-  opacity: 0.7;
-  color: var(--text-light);
-  animation: pulse 2s ease-in-out infinite;
+  font-size: 1.2rem;
+  margin-top: 8px;
+  opacity: 0.6;
+  color: var(--gold-primary);
+  animation: gentle-pulse 3s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes gentle-pulse {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.7;
+    opacity: 0.6;
   }
   50% {
-    transform: scale(1.1);
-    opacity: 1;
+    transform: scale(1.05);
+    opacity: 0.8;
   }
 }
-
-
 
 .menu-toggle {
   background: none;
@@ -190,23 +188,23 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px;
-  width: 40px;
-  height: 40px;
+  gap: 3px;
+  padding: 10px;
+  width: 35px;
+  height: 35px;
   justify-content: center;
   align-items: center;
 }
 
 .hamburger {
-  width: 25px;
+  width: 22px;
   height: 2px;
-  background: linear-gradient(90deg, var(--text-light), var(--text-muted));
+  background: var(--text-light);
   transition: all 0.3s ease;
   transform-origin: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
 .menu-toggle:focus {
   outline: none;
 }
@@ -241,7 +239,7 @@
     border: none;
     flex-direction: row;
     padding: 0;
-    gap: 20px;
+    gap: 15px;
     transform: none;
     opacity: 1;
     visibility: visible;
@@ -253,7 +251,7 @@
   
   .nav a {
     font-size: 0.85rem;
-    padding: 5px 8px;
+    padding: 4px 6px;
     position: relative;
     border-bottom: none;
     width: auto;
@@ -272,17 +270,17 @@
   
   .language-buttons {
     margin-top: 0;
-    margin-left: 15px;
+    margin-left: 12px;
   }
   
   .lang-btn {
-    padding: 6px 10px;
-    font-size: 1rem;
+    padding: 5px 8px;
+    font-size: 0.85rem;
   }
   
   .flag-icon {
-    width: 18px;
-    height: 13px;
+    width: 16px;
+    height: 12px;
   }
   
   .heart-icon {
@@ -296,14 +294,14 @@
   }
 
   .nav {
-    gap: 5px;
+    gap: 8px;
     flex-wrap: nowrap;
-    margin-left: 20px;
+    margin-left: 15px;
   }
   
   .nav a {
     font-size: 0.9rem;
-    padding: 5px 10px;
+    padding: 4px 8px;
   }
 
   .logo {

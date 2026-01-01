@@ -1,30 +1,194 @@
 .registry-section {
-  background-color: var(--color-white);
-  padding: 40px 20px 10px;
+  position: relative;
+  background: linear-gradient(135deg, 
+    #677a80 0%, 
+    #5a6b71 25%, 
+    #677a80 50%, 
+    #5a6b71 75%, 
+    #677a80 100%
+  );
+  padding: var(--spacing-xl) var(--spacing-md);
   text-align: center;
+  overflow: hidden;
+}
+
+/* Enhanced background with animated particles */
+.registry-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.02) 0%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+  animation: backgroundFloat 15s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+/* Animated Background Circles */
+.animated-circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 70%, transparent 100%);
+  animation: growAndFade 8s ease-in-out infinite;
+}
+
+.circle-1 {
+  top: 10%;
+  left: 15%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+
+.circle-2 {
+  top: 20%;
+  right: 20%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 1s;
+  animation-duration: 8s;
+}
+
+.circle-3 {
+  bottom: 30%;
+  left: 10%;
+  width: 25px;
+  height: 25px;
+  animation-delay: 2s;
+  animation-duration: 7s;
+}
+
+.circle-4 {
+  top: 60%;
+  right: 15%;
+  width: 18px;
+  height: 18px;
+  animation-delay: 3s;
+  animation-duration: 9s;
+}
+
+.circle-5 {
+  bottom: 15%;
+  right: 25%;
+  width: 22px;
+  height: 22px;
+  animation-delay: 4s;
+  animation-duration: 6.5s;
+}
+
+.circle-6 {
+  top: 40%;
+  left: 5%;
+  width: 16px;
+  height: 16px;
+  animation-delay: 5s;
+  animation-duration: 8.5s;
+}
+
+.circle-7 {
+  top: 80%;
+  left: 30%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 6s;
+  animation-duration: 7.5s;
+}
+
+.circle-8 {
+  top: 5%;
+  right: 40%;
+  width: 14px;
+  height: 14px;
+  animation-delay: 7s;
+  animation-duration: 9.5s;
+}
+
+@keyframes growAndFade {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(0.5);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.6;
+  }
+  80% {
+    transform: scale(4);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(6);
+    opacity: 0;
+  }
 }
 
 .registry-title {
   font-family: var(--font-title);
-  color: var(--color-navy);
+  color: #ffffff;
   font-size: 2.5rem;
   margin: 30px 0 30px 0;
+  position: relative;
+  z-index: 2;
 }
 
 .heart-icon {
   margin-top: 10px;
   width: 24px;
   height: 24px;
+  filter: brightness(1.5) invert(1);
 }
 
 .message-section {
   margin-bottom: 30px;
+  background: rgba(134, 151, 159, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  position: relative;
+  z-index: 2;
   
   .welcome-message {
     font-family: var(--font-text);
     font-size: 1.1rem;
     line-height: 1.6;
-    color: var(--color-black);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 300;
     margin: 0 0 20px 0;
   }
@@ -32,7 +196,7 @@
   .gratitude-message {
     font-family: var(--font-text);
     font-size: 1rem;
-    color: var(--color-navy);
+    color: rgba(255, 255, 255, 0.8);
     font-weight: 400;
     margin: 0;
   }
@@ -343,6 +507,19 @@
 }
 
 @media (max-width: 768px) {
+  .registry-section {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+  
+  .message-section {
+    padding: var(--spacing-lg);
+    margin: 0 var(--spacing-sm) var(--spacing-lg);
+  }
+  
+  .registry-title {
+    font-size: 2rem;
+  }
+  
   .card-navigation {
     gap: 10px;
   }
@@ -366,10 +543,6 @@
     h3 {
       font-size: 1.3rem;
     }
-  }
-  
-  .registry-title {
-    font-size: 2.5rem;
   }
   
   .card-details .detail-item {
@@ -415,5 +588,20 @@
       padding: 10px 20px;
       font-size: 0.95rem;
     }
+  }
+  
+  /* Smaller circles for mobile */
+  .circle {
+    animation-duration: 6s !important;
+  }
+  
+  .circle-1, .circle-3, .circle-5, .circle-7 {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .circle-2, .circle-4, .circle-6, .circle-8 {
+    width: 10px;
+    height: 10px;
   }
 }

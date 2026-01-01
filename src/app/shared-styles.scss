@@ -1,88 +1,86 @@
-/* Shared Elegant Styles for Corporate Dinner Gala Theme */
+/* Shared Elegant Styles for Wedding Invitation */
 
 /* Elegant section headers */
 .section-header {
   text-align: center;
   margin-bottom: var(--spacing-xl);
   position: relative;
+  padding: var(--spacing-md) 0;
 }
 
 .section-title {
   font-family: var(--font-title);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
   font-weight: 600;
   color: var(--gold-primary);
   margin-bottom: var(--spacing-sm);
   text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .section-subtitle {
   font-family: var(--font-script);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
   color: var(--text-muted);
   font-weight: 400;
   font-style: italic;
   margin-bottom: var(--spacing-md);
 }
 
+.section-subtitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
 /* Elegant cards */
 .elegant-card {
-  background: rgba(52, 69, 90, 0.8);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(134, 151, 159, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px var(--shadow-dark);
+  box-shadow: 0 8px 25px var(--shadow-dark);
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
-}
-
-.elegant-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, var(--gold-secondary), transparent);
-  transition: left 0.5s ease;
 }
 
 .elegant-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px var(--shadow-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px var(--shadow-dark);
   border-color: var(--gold-primary);
-}
-
-.elegant-card:hover::before {
-  left: 100%;
 }
 
 /* Icon containers */
 .icon-container {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   background: linear-gradient(135deg, var(--gold-primary), var(--gold-light));
+  border: 2px solid var(--gold-secondary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--spacing-md);
-  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
   transition: all 0.3s ease;
 }
 
 .icon-container:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
 }
 
 .icon-container svg,
 .icon-container img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   filter: brightness(0) invert(1);
 }
 
@@ -95,7 +93,7 @@
 
 .elegant-list li {
   padding: var(--spacing-sm) 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   position: relative;
   padding-left: var(--spacing-md);
   color: var(--text-light);
@@ -108,17 +106,17 @@
 }
 
 .elegant-list li::before {
-  content: '◆';
+  content: '•';
   position: absolute;
   left: 0;
   color: var(--gold-primary);
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 /* Elegant forms */
 .elegant-form {
-  background: rgba(52, 69, 90, 0.6);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(134, 151, 159, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   backdrop-filter: blur(10px);
@@ -144,8 +142,8 @@
 .form-textarea {
   width: 100%;
   padding: var(--spacing-sm);
-  background: rgba(42, 55, 72, 0.8);
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: rgba(134, 151, 159, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: var(--radius-md);
   color: var(--text-light);
   font-family: var(--font-text);
@@ -158,8 +156,8 @@
 .form-textarea:focus {
   outline: none;
   border-color: var(--gold-primary);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
-  background: rgba(42, 55, 72, 0.9);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+  background: rgba(134, 151, 159, 0.9);
 }
 
 .form-input::placeholder,
@@ -172,10 +170,10 @@
 .elegant-table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(52, 69, 90, 0.6);
+  background: rgba(134, 151, 159, 0.6);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 10px 30px var(--shadow-dark);
+  box-shadow: 0 8px 25px var(--shadow-dark);
 }
 
 .elegant-table th {
@@ -191,7 +189,7 @@
 
 .elegant-table td {
   padding: var(--spacing-sm) var(--spacing-md);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
   color: var(--text-light);
   font-family: var(--font-text);
   font-weight: 300;
@@ -202,7 +200,7 @@
 }
 
 .elegant-table tr:hover {
-  background: rgba(212, 175, 55, 0.1);
+  background: rgba(212, 175, 55, 0.08);
 }
 
 /* Timeline styles */
@@ -214,7 +212,7 @@
 .elegant-timeline::before {
   content: '';
   position: absolute;
-  left: 20px;
+  left: 15px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -230,21 +228,21 @@
 .timeline-item::before {
   content: '';
   position: absolute;
-  left: -8px;
-  top: 8px;
-  width: 16px;
-  height: 16px;
+  left: -6px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
   background: var(--gold-primary);
   border-radius: 50%;
-  border: 3px solid var(--primary-bg);
-  box-shadow: 0 0 0 3px var(--gold-primary);
+  border: 2px solid var(--primary-bg);
+  box-shadow: 0 0 0 2px var(--gold-primary);
 }
 
 .timeline-time {
   font-family: var(--font-text);
   font-weight: 600;
   color: var(--gold-primary);
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-bottom: var(--spacing-xs);
 }
 
@@ -261,42 +259,30 @@
   padding: var(--spacing-xs) var(--spacing-sm);
   background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
   color: var(--primary-bg);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   font-family: var(--font-text);
   font-weight: 500;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 /* Elegant progress bars */
 .elegant-progress {
   width: 100%;
-  height: 8px;
-  background: rgba(52, 69, 90, 0.8);
+  height: 6px;
+  background: rgba(134, 151, 159, 0.8);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: inset 0 2px 4px var(--shadow-dark);
+  box-shadow: inset 0 1px 3px var(--shadow-dark);
 }
 
 .elegant-progress-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--gold-secondary), var(--gold-primary));
   border-radius: var(--radius-sm);
-  transition: width 0.8s ease;
-  position: relative;
-}
-
-.elegant-progress-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s ease-in-out infinite;
+  transition: width 0.6s ease;
 }
 
 /* Utility classes */
@@ -319,16 +305,42 @@
 .p-lg { padding: var(--spacing-lg); }
 .p-xl { padding: var(--spacing-xl); }
 
-.gold-text { color: var(--gold-primary); }
+.gold-text { 
+  color: var(--gold-primary);
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
 .light-text { color: var(--text-light); }
 .muted-text { color: var(--text-muted); }
 
 .fade-in {
   opacity: 0;
-  animation: fadeInUp 0.8s ease-out forwards;
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.fade-in.delay-1 { animation-delay: 0.2s; }
-.fade-in.delay-2 { animation-delay: 0.4s; }
-.fade-in.delay-3 { animation-delay: 0.6s; }
-.fade-in.delay-4 { animation-delay: 0.8s; }
+.fade-in.delay-1 { animation-delay: 0.15s; }
+.fade-in.delay-2 { animation-delay: 0.3s; }
+.fade-in.delay-3 { animation-delay: 0.45s; }
+.fade-in.delay-4 { animation-delay: 0.6s; }
+
+/* Shimmer text effect */
+.shimmer-text-enhanced {
+  background: linear-gradient(90deg, 
+    var(--gold-secondary) 0%, 
+    var(--gold-primary) 50%, 
+    var(--gold-secondary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-enhanced 3s ease-in-out infinite;
+}
+
+@keyframes shimmer-enhanced {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}

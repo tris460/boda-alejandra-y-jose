@@ -16,33 +16,44 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #2A3748;
-  color: #D4AF37;
+  background: var(--sage-light);
+  color: var(--text-dark);
   font-family: var(--font-text);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 :root {
-  /* Elegant Color Palette */
-  --primary-bg: #677a80;
-  --secondary-bg: #86979f;
-  --accent-bg: #47596f;
-  --gold-primary: #dddddb;
-  --gold-secondary: #9a9995;
-  --gold-light: #d8d6ca;
-  --text-light: #F5F5F5;
-  --text-muted: #B8C5D1;
-  --border-gold: #bbbbbb;
-  --shadow-dark: rgba(0, 0, 0, 0.3);
-  --shadow-gold: rgba(212, 175, 55, 0.2);
+  /* Sage Green Wedding Palette - Inspired by elegant wedding invitations */
+  --sage-primary: #8FA68E;      /* Main sage green */
+  --sage-secondary: #A4B5A3;    /* Lighter sage */
+  --sage-dark: #5D6B5C;         /* Darker sage for text */
+  --sage-light: #F4F6F4;        /* Very light sage background */
+  --sage-border: #C8D3C7;       /* Sage border color */
+  
+  --cream-white: #FEFEFE;        /* Pure white for cards */
+  --cream-warm: #FAF9F7;        /* Warm cream */
+  --text-dark: #2C3E2D;         /* Dark green for main text */
+  --text-muted: #6B7A6A;        /* Muted green for secondary text */
+  
+  /* Legacy color mappings for compatibility */
+  --primary-bg: var(--sage-light);
+  --secondary-bg: var(--sage-secondary);
+  --accent-bg: var(--sage-primary);
+  --gold-primary: var(--sage-primary);
+  --gold-secondary: var(--sage-secondary);
+  --gold-light: var(--sage-border);
+  --text-light: var(--text-dark);
+  --border-gold: var(--sage-border);
+  --shadow-dark: rgba(45, 62, 45, 0.15);
+  --shadow-gold: rgba(143, 166, 142, 0.2);
   
   /* Legacy colors for compatibility */
-  --color-silver: #B8C5D1;
-  --color-navy: #2A3748;
-  --color-white: #F5F5F5;
-  --color-black: #1A1A1A;
-  --color-gray: #34455A;
+  --color-silver: var(--sage-border);
+  --color-navy: var(--sage-dark);
+  --color-white: var(--cream-white);
+  --color-black: var(--text-dark);
+  --color-gray: var(--sage-secondary);
   
   /* Typography */
   --font-title: "Playfair Display", serif;
@@ -63,7 +74,7 @@ body {
   --radius-xl: 20px;
 }
 
-/* Background patterns and textures */
+/* Background patterns and textures - Sage Green Theme */
 body::before {
   content: '';
   position: fixed;
@@ -72,11 +83,43 @@ body::before {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-    linear-gradient(135deg, #2A3748 0%, #1E2A38 100%);
+    radial-gradient(circle at 20% 20%, rgba(143, 166, 142, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(143, 166, 142, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 10%, rgba(143, 166, 142, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(143, 166, 142, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, var(--sage-light) 0%, var(--cream-warm) 50%, var(--sage-light) 100%);
   z-index: -1;
   pointer-events: none;
+  animation: background-shimmer 20s ease-in-out infinite;
+}
+
+@keyframes background-shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* Subtle texture pattern */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-conic-gradient(from 0deg at 50% 50%, 
+      transparent 0deg, 
+      rgba(143, 166, 142, 0.01) 2deg, 
+      transparent 4deg, 
+      transparent 20deg
+    );
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.3;
 }
 
 /* Elegant scrollbar */
@@ -85,22 +128,22 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary-bg);
+  background: var(--sage-light);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gold-primary);
+  background: var(--sage-primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-secondary);
+  background: var(--sage-dark);
 }
 
 /* Typography styles */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
-  color: var(--gold-primary);
+  color: var(--sage-dark);
   font-weight: 600;
   line-height: 1.2;
   margin-bottom: var(--spacing-sm);
@@ -109,7 +152,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
-  text-shadow: 2px 2px 4px var(--shadow-dark);
+  text-shadow: 1px 1px 2px rgba(45, 62, 45, 0.1);
 }
 
 h2 {
@@ -123,7 +166,7 @@ h3 {
 }
 
 p {
-  color: var(--text-light);
+  color: var(--text-dark);
   margin-bottom: var(--spacing-sm);
   font-weight: 300;
 }
@@ -132,8 +175,8 @@ p {
 .btn {
   display: inline-block;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
-  color: var(--primary-bg);
+  background: linear-gradient(135deg, var(--sage-primary) 0%, var(--sage-secondary) 100%);
+  color: var(--cream-white);
   text-decoration: none;
   border: none;
   border-radius: var(--radius-md);
@@ -142,44 +185,44 @@ p {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px var(--shadow-gold);
+  box-shadow: 0 4px 15px rgba(143, 166, 142, 0.2);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--shadow-gold);
-  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+  box-shadow: 0 6px 20px rgba(143, 166, 142, 0.3);
+  background: linear-gradient(135deg, var(--sage-dark) 0%, var(--sage-primary) 100%);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--gold-primary);
-  border: 2px solid var(--gold-primary);
+  color: var(--sage-primary);
+  border: 2px solid var(--sage-primary);
   box-shadow: none;
 }
 
 .btn-outline:hover {
-  background: var(--gold-primary);
-  color: var(--primary-bg);
+  background: var(--sage-primary);
+  color: var(--cream-white);
 }
 
 /* Card styles */
 .card {
-  background: rgba(52, 69, 90, 0.8);
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: var(--cream-white);
+  border: 1px solid var(--sage-border);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px var(--shadow-dark);
+  box-shadow: 0 8px 32px rgba(45, 62, 45, 0.1);
   transition: all 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px var(--shadow-dark);
-  border-color: var(--gold-primary);
+  box-shadow: 0 12px 40px rgba(45, 62, 45, 0.15);
+  border-color: var(--sage-primary);
 }
 
 /* Section styling */
@@ -199,14 +242,14 @@ section {
 .divider {
   width: 100px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  background: linear-gradient(90deg, transparent, var(--sage-primary), transparent);
   margin: var(--spacing-md) auto;
 }
 
 .divider-full {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  background: linear-gradient(90deg, transparent, var(--sage-primary), transparent);
   margin: var(--spacing-lg) 0;
 }
 
@@ -236,7 +279,7 @@ section {
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, var(--gold-secondary), var(--gold-primary), var(--gold-light), var(--gold-primary), var(--gold-secondary));
+  background: linear-gradient(90deg, var(--sage-secondary), var(--sage-primary), var(--sage-border), var(--sage-primary), var(--sage-secondary));
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -263,12 +306,12 @@ section {
 
 /* Focus styles for accessibility */
 *:focus {
-  outline: 2px solid var(--gold-primary);
+  outline: 2px solid var(--sage-primary);
   outline-offset: 2px;
 }
 
 /* Selection styles */
 ::selection {
-  background: var(--gold-primary);
-  color: var(--primary-bg);
+  background: var(--sage-primary);
+  color: var(--cream-white);
 }

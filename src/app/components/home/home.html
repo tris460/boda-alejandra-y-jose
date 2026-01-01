@@ -1,32 +1,91 @@
 <section id="home" class="home-section">
-  <div class="elegant-border">
-    <div class="decorative-corners top-left"></div>
-    <div class="decorative-corners top-right"></div>
-    <div class="decorative-corners bottom-left"></div>
-    <div class="decorative-corners bottom-right"></div>
+  <!-- Animated Background Circles -->
+  <div class="animated-circles">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+    <div class="circle circle-4"></div>
+    <div class="circle circle-5"></div>
+    <div class="circle circle-6"></div>
+    <div class="circle circle-7"></div>
+    <div class="circle circle-8"></div>
   </div>
-  
-  <div class="hero-content">
-    <div class="invitation-text">
-      <p class="invitation-line">{{ 'home.invitation' | translate }}</p>
-      <h2 class="event-title">{{ 'home.event' | translate }}</h2>
-      <h1 class="couple-names shimmer-text">{{ 'home.names' | translate }}</h1>
-      <div class="event-details">
-        <p class="location">{{ 'home.phrase' | translate }}</p>
-      </div>
-      <div class="divider"></div>
-      <p class="description">{{ 'home.description' | translate }}</p>
+
+  <!-- Language Toggle Button -->
+  <div class="language-toggle">
+    <button class="lang-btn" (click)="toggleLanguage()">
+      <span class="lang-text">{{ currentLanguage === 'es' ? 'ES' : 'EN' }}</span>
+    </button>
+  </div>
+
+  <div class="invitation-card">
+    <!-- Decorative floral elements -->
+    <div class="floral-decoration top-left">
+      <svg viewBox="0 0 100 100" class="floral-svg">
+        <path d="M20,80 Q30,60 50,70 Q70,60 80,80 Q70,90 50,80 Q30,90 20,80 Z" fill="currentColor" opacity="0.3"/>
+        <path d="M25,75 Q35,55 55,65 Q75,55 85,75" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="50" cy="70" r="3" fill="currentColor" opacity="0.7"/>
+      </svg>
     </div>
     
-    <div class="hero-image">
-      <img src="foto1.jpeg" alt="Alejandra & José - Engagement" class="main-image">
-      <div class="image-overlay"></div>
+    <div class="floral-decoration top-right">
+      <svg viewBox="0 0 100 100" class="floral-svg">
+        <path d="M80,20 Q70,40 50,30 Q30,40 20,20 Q30,10 50,20 Q70,10 80,20 Z" fill="currentColor" opacity="0.3"/>
+        <path d="M75,25 Q65,45 45,35 Q25,45 15,25" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="50" cy="30" r="3" fill="currentColor" opacity="0.7"/>
+      </svg>
     </div>
-  </div>
-  
-  <div class="floating-elements">
-    <div class="floating-element element-1"></div>
-    <div class="floating-element element-2"></div>
-    <div class="floating-element element-3"></div>
+    
+    <div class="invitation-content">
+      <!-- Header text -->
+      <div class="invitation-header">
+        <p class="invitation-line">{{ 'home.invitation' | translate }}</p>
+        <div class="ornamental-divider">
+          <span class="divider-line"></span>
+          <span class="divider-ornament">❦</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+      
+      <!-- Main content -->
+      <div class="main-content">
+        <h1 class="couple-names">
+          <span class="bride-name">ALEJANDRA MARTINEZ</span>
+          <span class="ampersand">&</span>
+          <span class="groom-name">JOSÉ CABRAL</span>
+        </h1>
+        <h2 class="event-title">{{ 'home.event' | translate }}</h2>
+        
+        <!-- Couple Photo -->
+        <div class="couple-photo">
+          <img src="foto1.jpeg" alt="Alejandra & José - Engagement" class="main-image">
+          <div class="image-overlay"></div>
+        </div>
+        
+        <div class="event-details">
+          <p class="event-date">{{ 'home.phrase' | translate }}</p>
+        </div>
+        
+        <div class="elegant-divider">
+          <svg viewBox="0 0 200 20" class="divider-svg">
+            <path d="M10,10 Q50,5 100,10 Q150,5 190,10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        
+        <p class="description">{{ 'home.description' | translate }}</p>
+      </div>
+    </div>
+    
+    <!-- Bottom floral decoration -->
+    <div class="floral-decoration bottom-center">
+      <svg viewBox="0 0 120 60" class="floral-svg">
+        <path d="M20,40 Q40,20 60,40 Q80,20 100,40 Q80,50 60,40 Q40,50 20,40 Z" fill="currentColor" opacity="0.2"/>
+        <path d="M30,35 Q50,15 70,35 Q90,15 110,35" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+        <circle cx="60" cy="35" r="2" fill="currentColor" opacity="0.6"/>
+        <circle cx="40" cy="40" r="1.5" fill="currentColor" opacity="0.5"/>
+        <circle cx="80" cy="40" r="1.5" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </div>
   </div>
 </section>

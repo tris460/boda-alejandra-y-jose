@@ -1,14 +1,17 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
 import { ImageGalleryService, GalleryImage } from '../../services/image-gallery.service';
+import { CameraCaptureComponent } from '../camera-capture/camera-capture';
+import { CameraPhoto } from '../../services/camera.service';
 import { AppConfig } from '../../config/app.config';
 
 @Component({
   selector: 'app-post-wedding-gallery',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, CameraCaptureComponent],
   templateUrl: './post-wedding-gallery.html',
   styleUrl: './post-wedding-gallery.scss'
 })
@@ -19,18 +22,27 @@ export class PostWeddingGallery implements OnInit, OnChanges {
   isLoading = false;
   isUploading = false;
   selectedImage: GalleryImage | null = null;
+  showCamera = false;
   
   // Información del proveedor actual
   currentProvider = AppConfig.GALLERY.PROVIDER;
 
   constructor(
     private translationService: TranslationService,
-    private imageGalleryService: ImageGalleryService
+    private imageGalleryService: ImageGalleryService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.translationService.setLanguage(this.currentLanguage);
     this.loadImages();
+    
+    // Verificar si se debe abrir la cámara automáticamente
+    this.route.queryParams.subscribe(params => {
+      if (params['camera'] === 'true') {
+        this.openCamera();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -124,6 +136,22 @@ export class PostWeddingGallery implements OnInit, OnChanges {
 
   closeImageModal() {
     this.selectedImage = null;
+  }
+
+  // Métodos para la cámara
+  openCamera() {
+    this.showCamera = true;
+  }
+
+  closeCamera() {
+    this.showCamera = false;
+  }
+
+  async onPhotoTaken(photo: CameraPhoto) {
+    this.closeCamera();
+    
+    // Subir la foto capturada
+    await this.uploadImage(photo.file);
   }
 
   // Método para cambiar de proveedor (para testing)

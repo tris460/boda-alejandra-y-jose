@@ -71,7 +71,7 @@
   flex-wrap: wrap;
 }
 
-.upload-btn, .refresh-btn {
+.upload-btn, .refresh-btn, .camera-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
@@ -88,19 +88,19 @@
   backdrop-filter: blur(10px);
 }
 
-.upload-btn:hover:not(:disabled), .refresh-btn:hover:not(:disabled) {
+.upload-btn:hover:not(:disabled), .refresh-btn:hover:not(:disabled), .camera-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.upload-btn:disabled, .refresh-btn:disabled {
+.upload-btn:disabled, .refresh-btn:disabled, .camera-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.upload-icon, .refresh-icon {
+.upload-icon, .refresh-icon, .camera-icon {
   width: 24px;
   height: 24px;
   fill: currentColor;
@@ -313,7 +313,7 @@
     width: 280px; /* Ancho más pequeño en móviles */
   }
 
-  .upload-btn, .refresh-btn {
+  .upload-btn, .refresh-btn, .camera-btn {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
   }

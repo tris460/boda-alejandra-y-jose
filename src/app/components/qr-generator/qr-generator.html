@@ -1,0 +1,104 @@
+<div class="qr-generator">
+  <div class="qr-container">
+    <!-- Header -->
+    <div class="qr-header">
+      <h2>QR para Galería Post-Boda</h2>
+      <p>Los invitados pueden escanear este QR para subir fotos directamente</p>
+    </div>
+
+    <!-- QR Code -->
+    <div class="qr-display">
+      <div class="qr-image-container" *ngIf="!isGenerating">
+        <img [src]="qrImageUrl" alt="QR Code para galería" class="qr-image">
+        <div class="qr-overlay">
+          <div class="qr-logo">
+            <svg viewBox="0 0 24 24">
+              <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,17L7,12H10V8H14V12H17L12,17Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <div class="qr-loading" *ngIf="isGenerating">
+        <div class="loading-spinner"></div>
+        <p>Generando QR...</p>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="qr-instructions">
+      <h3>¿Cómo funciona?</h3>
+      <div class="instruction-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Escanear QR</h4>
+            <p>Los invitados escanean el código con su teléfono</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Cámara automática</h4>
+            <p>Se abre la galería y activa la cámara automáticamente</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Subir fotos</h4>
+            <p>Pueden tomar fotos o subir desde su galería</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- URL Display -->
+    <div class="url-display">
+      <label>URL directa:</label>
+      <div class="url-container">
+        <input type="text" [value]="galleryUrl" readonly class="url-input">
+        <button class="copy-btn" (click)="copyUrl()" title="Copiar URL">
+          <svg viewBox="0 0 24 24">
+            <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="qr-actions">
+      <button class="download-btn" (click)="downloadQR()">
+        <svg viewBox="0 0 24 24">
+          <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
+        </svg>
+        Descargar QR
+      </button>
+      
+      <button class="share-btn" (click)="shareUrl()">
+        <svg viewBox="0 0 24 24">
+          <path d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z"/>
+        </svg>
+        Compartir
+      </button>
+
+      <button class="regenerate-btn" (click)="generateQR()">
+        <svg viewBox="0 0 24 24">
+          <path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/>
+        </svg>
+        Regenerar
+      </button>
+    </div>
+
+    <!-- Tips -->
+    <div class="qr-tips">
+      <h4>💡 Consejos:</h4>
+      <ul>
+        <li>Imprime el QR en tamaño grande para fácil escaneo</li>
+        <li>Colócalo en un lugar visible durante la recepción</li>
+        <li>Asegúrate de que haya buena iluminación</li>
+        <li>Puedes compartir la URL directamente por WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+</div>

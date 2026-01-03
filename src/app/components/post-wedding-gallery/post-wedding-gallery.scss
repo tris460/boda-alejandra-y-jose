@@ -157,7 +157,8 @@
   box-sizing: border-box;
 }
 
-.image-card {
+/* Asegurar que las imágenes de la galería no tengan restricciones de altura */
+.post-wedding-gallery .gallery-grid .image-card {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   overflow: hidden;
@@ -165,20 +166,32 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   width: 350px; /* Ancho fijo */
   flex-shrink: 0; /* No permitir que se encoja */
+  /* Asegurar que no haya altura fija */
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
 }
 
-.image-container {
+.post-wedding-gallery .gallery-grid .image-container {
   position: relative;
   width: 100%;
+  /* Asegurar que no haya altura fija */
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
 }
 
-.gallery-image {
+.post-wedding-gallery .gallery-grid .gallery-image {
   width: 100%;
-  height: auto; /* Alto completamente automático */
+  height: auto !important; /* Alto completamente automático - forzar */
+  min-height: auto !important; /* Sin altura mínima - forzar */
+  max-height: none !important; /* Sin límite de altura máxima - forzar */
   object-fit: contain; /* No recortar nunca */
   cursor: pointer;
   display: block;
   background: rgba(255, 255, 255, 0.1);
+  /* Asegurar que mantenga proporción */
+  aspect-ratio: auto;
 }
 
 /* Empty State */
@@ -296,7 +309,7 @@
     padding: 1rem 0 3rem 0;
   }
 
-  .image-card {
+  .post-wedding-gallery .gallery-grid .image-card {
     width: 280px; /* Ancho más pequeño en móviles */
   }
 
@@ -326,7 +339,7 @@
     padding: 1rem 0 3rem 0;
   }
 
-  .image-card {
+  .post-wedding-gallery .gallery-grid .image-card {
     width: calc(100vw - 2rem); /* Ancho completo menos padding en móviles pequeños */
     max-width: 350px;
   }

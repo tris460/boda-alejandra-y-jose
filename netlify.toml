@@ -1,6 +1,6 @@
 [build]
   publish = "dist/wedding-b-y-e/browser"
-  command = "node build-netlify.js"
+  command = "npm install && npm run build"
 
 [functions]
   directory = "netlify/functions"

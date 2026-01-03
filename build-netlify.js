@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 
 try {
   console.log('📦 Installing dependencies...');
-  execSync('npm ci', { stdio: 'inherit' });
+  execSync('npm install', { stdio: 'inherit' });
   
   console.log('🔨 Building Angular application...');
   execSync('npm run build', { stdio: 'inherit' });

@@ -1,0 +1,68 @@
+🚀 Starting Netlify build process...
+11:06:57 PM: Node version: v20.19.6
+11:06:57 PM: Platform: linux
+11:06:57 PM: Architecture: x64
+11:06:57 PM: 📦 Installing dependencies...
+11:06:58 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+11:06:58 PM: npm error code EUSAGE
+11:06:58 PM: npm error
+11:06:58 PM: npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+11:06:58 PM: npm error
+11:06:58 PM: npm error Missing: chokidar@3.6.0 from lock file
+11:06:58 PM: npm error Missing: readdirp@3.6.0 from lock file
+11:06:58 PM: npm error Missing: picomatch@2.3.1 from lock file
+11:06:58 PM: npm error
+11:06:58 PM: npm error Clean install a project
+11:06:58 PM: npm error
+11:06:58 PM: npm error Usage:
+11:06:58 PM: npm error npm ci
+11:06:58 PM: npm error
+11:06:58 PM: npm error Options:
+11:06:58 PM: npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+11:06:58 PM: npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+11:06:58 PM: npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+11:06:58 PM: npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+11:06:58 PM: npm error [--no-bin-links] [--no-fund] [--dry-run]
+11:06:58 PM: npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+11:06:58 PM: npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+11:06:58 PM: npm error
+11:06:58 PM: npm error aliases: clean-install, ic, install-clean, isntall-clean
+11:06:58 PM: npm error
+11:06:58 PM: npm error Run "npm help ci" for more info
+11:06:58 PM: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-01-03T05_06_57_730Z-debug-0.log
+11:06:58 PM: ❌ Build failed: Command failed: npm ci
+11:06:58 PM: ​
+11:06:58 PM: "build.command" failed                                        
+11:06:58 PM: ────────────────────────────────────────────────────────────────
+11:06:58 PM: ​
+11:06:58 PM:   Error message
+11:06:58 PM:   Command failed with exit code 1: node build-netlify.js (https://ntl.fyi/exit-code-1)
+11:06:58 PM: ​
+11:06:58 PM:   Error location
+11:06:58 PM:   In build.command from netlify.toml:
+11:06:58 PM:   node build-netlify.js
+11:06:58 PM: ​
+11:06:58 PM:   Resolved config
+11:06:58 PM:   build:
+11:06:58 PM:     command: node build-netlify.js
+11:06:58 PM:     commandOrigin: config
+11:06:58 PM:     environment:
+11:06:58 PM:       - CLOUDINARY_API_KEY
+11:06:58 PM:       - CLOUDINARY_API_SECRET
+11:06:58 PM:       - CLOUDINARY_CLOUD_NAME
+11:06:58 PM:       - NODE_VERSION
+11:06:58 PM:     publish: /opt/build/repo/dist/wedding-b-y-e/browser
+11:06:58 PM:     publishOrigin: config
+11:06:58 PM:   functionsDirectory: /opt/build/repo/netlify/functions
+11:06:58 PM:   plugins:
+11:06:58 PM:     - inputs: {}
+11:06:58 PM:       origin: ui
+11:06:58 PM:       package: "@netlify/angular-runtime"
+11:06:58 PM:   redirects:
+11:06:58 PM:     - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+11:06:58 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+11:06:58 PM: Failing build: Failed to build site
+11:06:58 PM: Finished processing build request in 16.844s

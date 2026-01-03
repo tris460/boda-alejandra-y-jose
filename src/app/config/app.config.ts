@@ -1,10 +1,9 @@
 export const AppConfig = {
-  // Configuración de Cloudinary (alternativa a Google Apps Script)
+  // Configuración de Cloudinary (solo para upload desde frontend)
   CLOUDINARY: {
-    CLOUD_NAME: 'dryqm0ye4', // Cambiar por tu cloud name
-    UPLOAD_PRESET: 'post-wedding-gallery-a-y-j', // Preset sin autenticación
-    API_KEY: '749477636633875' // Solo para referencia, no se usa en el frontend
-    // API_SECRET removido por seguridad - no debe estar en el frontend
+    CLOUD_NAME: 'dryqm0ye4',
+    UPLOAD_PRESET: 'post-wedding-gallery-a-y-j' // Solo para upload, no necesita credenciales
+    // API_KEY y API_SECRET ahora están en variables de entorno de Netlify
   },
   
   // URL de Google Apps Script (backup)

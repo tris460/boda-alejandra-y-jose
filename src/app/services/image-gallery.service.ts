@@ -76,7 +76,7 @@ export class ImageGalleryService {
 
   async getImages(): Promise<GalleryImage[]> {
     try {
-      console.log('🔍 Getting images from Cloudinary...');
+      console.log('🔍 Getting images via Netlify Function...');
       
       // Check cache first
       if (this.imageCache && (Date.now() - this.imageCache.timestamp) < this.CACHE_DURATION) {
@@ -84,62 +84,60 @@ export class ImageGalleryService {
         return this.imageCache.images;
       }
       
-      // Try to get images using the resource list endpoint (public)
-      const resourceListUrl = `https://res.cloudinary.com/${AppConfig.CLOUDINARY.CLOUD_NAME}/image/list/post-wedding-gallery.json`;
+      // Detectar si estamos en desarrollo o producción
+      const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+      const baseUrl = isProduction ? '' : 'http://localhost:8888'; // Netlify dev server
+      const netlifyFunctionUrl = `${baseUrl}/.netlify/functions/get-images`;
       
-      console.log('📡 Trying resource list endpoint...');
+      console.log('📡 Calling Netlify Function:', netlifyFunctionUrl);
       
-      try {
-        const response = await fetch(resourceListUrl, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          
-          if (data.resources && data.resources.length > 0) {
-            console.log(`✅ Found ${data.resources.length} images via resource list`);
-            
-            const galleryImages = data.resources.map((resource: any) => ({
-              id: resource.public_id,
-              name: this.extractImageName(resource.public_id),
-              url: `https://res.cloudinary.com/${AppConfig.CLOUDINARY.CLOUD_NAME}/image/upload/${resource.public_id}`,
-              thumbnail: `https://res.cloudinary.com/${AppConfig.CLOUDINARY.CLOUD_NAME}/image/upload/w_400,h_300,c_fill/${resource.public_id}`,
-              uploadDate: new Date()
-            }));
-            
-            const allImages = this.combineImages(this.uploadedImages, galleryImages);
-            
-            this.imageCache = {
-              images: allImages,
-              timestamp: Date.now()
-            };
-            
-            console.log(`✅ Total images available: ${allImages.length}`);
-            return allImages;
-          }
+      const response = await fetch(netlifyFunctionUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
         }
-      } catch (listError) {
-        console.log('⚠️ Resource list not available, using session images only');
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Netlify Function error: ${response.status} ${response.statusText}`);
       }
       
-      // Fallback: return only session images (images uploaded in this session)
-      console.log(`📝 Returning ${this.uploadedImages.length} session images`);
+      const data = await response.json();
       
-      // Cache session images too
+      if (!data.success) {
+        throw new Error(data.error || 'Unknown error from Netlify Function');
+      }
+      
+      console.log(`✅ Netlify Function returned ${data.images.length} images`);
+      
+      // Convert string dates to Date objects
+      const galleryImages = data.images.map((image: any) => ({
+        ...image,
+        uploadDate: new Date(image.uploadDate)
+      }));
+      
+      // Combine with session images and remove duplicates
+      const allImages = this.combineImages(this.uploadedImages, galleryImages);
+      
+      // Cache the results
+      this.imageCache = {
+        images: allImages,
+        timestamp: Date.now()
+      };
+      
+      console.log(`✅ Total images available: ${allImages.length}`);
+      return allImages;
+      
+    } catch (error) {
+      console.error('❌ Error getting images via Netlify Function:', error);
+      console.log('🔄 Falling back to session images...');
+      
+      // Fallback to session images
       this.imageCache = {
         images: this.uploadedImages,
         timestamp: Date.now()
       };
       
-      return this.uploadedImages;
-      
-    } catch (error) {
-      console.error('❌ Error getting images:', error);
-      // Final fallback to session images
       return this.uploadedImages;
     }
   }

@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "dev": "netlify dev",
+    "build:netlify": "ng build --configuration production",
+    "deploy": "netlify deploy --prod --dir=dist/post-wedding-gallery"
   },
   "prettier": {
     "overrides": [

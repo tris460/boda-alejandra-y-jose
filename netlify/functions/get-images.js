@@ -55,8 +55,8 @@ exports.handler = async (event, context) => {
     // Crear Basic Auth
     const credentials = Buffer.from(`${apiKey}:${apiSecret}`).toString('base64');
     
-    // URL del Admin API
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/image?max_results=50&prefix=post-wedding-gallery/`;
+    // URL del Admin API - agregar parámetro type requerido
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/resources/image?type=upload&max_results=50&prefix=post-wedding-gallery/`;
     
     console.log('🔍 Making request to:', url.replace(credentials, '[CREDENTIALS]'));
 

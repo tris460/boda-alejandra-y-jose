@@ -120,6 +120,14 @@ export class TranslationService {
       'footer.contact.subtitle': '¿Preguntas? Contáctanos',
       'footer.love': 'Con amor, A & J',
       'footer.rights': '2025 Alejandra & José - Nuestro día especial',
+      'home.postWeddingGallery': 'Galería',
+      'gallery.postWeddingTitle': 'Galería Post-Boda',
+      'gallery.postWeddingSubtitle': 'Comparte tus mejores momentos de nuestra celebración',
+      'gallery.uploadImage': 'Cargar Imagen',
+      'gallery.uploading': 'Subiendo...',
+      'gallery.loadingImages': 'Cargando imágenes...',
+      'gallery.noImages': 'No hay imágenes aún',
+      'gallery.noImagesDescription': 'Sé el primero en compartir un momento especial de nuestra boda',
     },
     en: {
       'home.phrase': 'Together is a beautiful place to be. Join us as we say ‘I do’!',
@@ -229,6 +237,14 @@ export class TranslationService {
       'footer.contact.subtitle': 'Questions? Contact us',
       'footer.love': 'With love, A & J',
       'footer.rights': '2025 Alejandra & José - Our special day',
+      'home.postWeddingGallery': 'Gallery',
+      'gallery.postWeddingTitle': 'Post-Wedding Gallery',
+      'gallery.postWeddingSubtitle': 'Share your best moments from our celebration',
+      'gallery.uploadImage': 'Upload Image',
+      'gallery.uploading': 'Uploading...',
+      'gallery.loadingImages': 'Loading images...',
+      'gallery.noImages': 'No images yet',
+      'gallery.noImagesDescription': 'Be the first to share a special moment from our wedding',
     }
   };
 

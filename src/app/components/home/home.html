@@ -18,6 +18,17 @@
     </button>
   </div>
 
+  <!-- Post-Wedding Gallery Button -->
+  <div class="gallery-toggle">
+    <button class="gallery-btn" (click)="openGalleryModal()" type="button">
+      <svg viewBox="0 0 24 24" class="gallery-icon">
+        <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/>
+        <path d="M21,17H7V3H21M21,1H7A2,2 0 0,0 5,3V17A2,2 0 0,0 7,19H21A2,2 0 0,0 23,17V3A2,2 0 0,0 21,1M19,15H9V5H19M13.96,12.71L11.21,9.25L9.25,11.83L8.5,11L11.21,7.75L13.96,11.29L16.71,7.75L19.5,11.83L18.38,12.71L16.71,10.67L13.96,12.71Z"/>
+      </svg>
+      <span class="gallery-text">{{ 'home.postWeddingGallery' | translate }}</span>
+    </button>
+  </div>
+
   <div class="invitation-card">
     <!-- Decorative floral elements -->
     <div class="floral-decoration top-left">
@@ -89,3 +100,18 @@
     </div>
   </div>
 </section>
+
+<!-- Modal de Galería Post-Boda -->
+<div class="gallery-modal" *ngIf="isGalleryModalOpen" (click)="closeGalleryModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Botón de cerrar -->
+    <button class="modal-close-btn" (click)="closeGalleryModal()">
+      <svg viewBox="0 0 24 24" class="close-icon">
+        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+      </svg>
+    </button>
+    
+    <!-- Componente de galería -->
+    <app-post-wedding-gallery [currentLanguage]="currentLanguage"></app-post-wedding-gallery>
+  </div>
+</div>

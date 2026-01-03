@@ -1,0 +1,80 @@
+<section class="post-wedding-gallery">
+  <!-- Header -->
+  <div class="gallery-header">
+    <h1 class="gallery-title">{{ 'gallery.postWeddingTitle' | translate }}</h1>
+    <p class="gallery-subtitle">{{ 'gallery.postWeddingSubtitle' | translate }}</p>
+    
+    <!-- Upload Button -->
+    <div class="upload-section">
+      <input 
+        type="file" 
+        id="imageUpload" 
+        accept="image/*" 
+        (change)="onFileSelected($event)"
+        style="display: none;">
+      
+      <button 
+        class="upload-btn" 
+        (click)="triggerFileInput()"
+        [disabled]="isUploading">
+        <svg viewBox="0 0 24 24" class="upload-icon" *ngIf="!isUploading">
+          <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+          <path d="M12,11L16,15H13V19H11V15H8L12,11Z"/>
+        </svg>
+        <div class="loading-spinner" *ngIf="isUploading"></div>
+        <span>{{ isUploading ? ('gallery.uploading' | translate) : ('gallery.uploadImage' | translate) }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner large"></div>
+    <p>{{ 'gallery.loadingImages' | translate }}</p>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid" *ngIf="!isLoading">
+    <div class="image-card" *ngFor="let image of images; trackBy: trackByImageId">
+      <div class="image-container">
+        <img 
+          [src]="image.thumbnail || image.url" 
+          [alt]="image.name"
+          class="gallery-image"
+          loading="lazy"
+          (click)="openImageModal(image)">
+        <div class="image-overlay">
+          <div class="image-info">
+            <p class="image-name">{{ image.name }}</p>
+            <p class="upload-date">{{ image.uploadDate | date:'short' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && images.length === 0">
+    <svg viewBox="0 0 24 24" class="empty-icon">
+      <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z"/>
+    </svg>
+    <h3>{{ 'gallery.noImages' | translate }}</h3>
+    <p>{{ 'gallery.noImagesDescription' | translate }}</p>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="image-modal" *ngIf="selectedImage" (click)="closeImageModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeImageModal()">
+        <svg viewBox="0 0 24 24">
+          <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+        </svg>
+      </button>
+      <img [src]="selectedImage.url" [alt]="selectedImage.name" class="modal-image">
+      <div class="modal-info">
+        <h4>{{ selectedImage.name }}</h4>
+        <p>{{ selectedImage.uploadDate | date:'medium' }}</p>
+      </div>
+    </div>
+  </div>
+</section>

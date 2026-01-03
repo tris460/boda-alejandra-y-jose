@@ -32,6 +32,11 @@ export class CameraService {
    */
   async startCamera(videoElement: HTMLVideoElement): Promise<MediaStream> {
     try {
+      // Verificar que el elemento video esté disponible
+      if (!videoElement) {
+        throw new Error('Elemento de video no disponible');
+      }
+
       // Preferir cámara trasera en móviles
       const constraints: MediaStreamConstraints = {
         video: {
@@ -45,7 +50,26 @@ export class CameraService {
       this.stream = await navigator.mediaDevices.getUserMedia(constraints);
       videoElement.srcObject = this.stream;
       
-      return this.stream;
+      // Esperar a que el video esté listo
+      return new Promise((resolve, reject) => {
+        videoElement.onloadedmetadata = () => {
+          videoElement.play().then(() => {
+            resolve(this.stream!);
+          }).catch(reject);
+        };
+        
+        videoElement.onerror = () => {
+          reject(new Error('Error al cargar el video'));
+        };
+        
+        // Timeout de seguridad
+        setTimeout(() => {
+          if (videoElement.readyState === 0) {
+            reject(new Error('Timeout al inicializar la cámara'));
+          }
+        }, 10000);
+      });
+      
     } catch (error) {
       console.error('Error starting camera:', error);
       
@@ -63,9 +87,34 @@ export class CameraService {
         this.stream = await navigator.mediaDevices.getUserMedia(fallbackConstraints);
         videoElement.srcObject = this.stream;
         
-        return this.stream;
+        return new Promise((resolve, reject) => {
+          videoElement.onloadedmetadata = () => {
+            videoElement.play().then(() => {
+              resolve(this.stream!);
+            }).catch(reject);
+          };
+          
+          videoElement.onerror = () => {
+            reject(new Error('Error al cargar el video'));
+          };
+        });
+        
       } catch (fallbackError) {
         console.error('Error with fallback camera:', fallbackError);
+        
+        // Mensajes de error más específicos
+        if (fallbackError instanceof Error) {
+          if (fallbackError.name === 'NotAllowedError') {
+            throw new Error('Permiso de cámara denegado. Por favor, permite el acceso a la cámara.');
+          } else if (fallbackError.name === 'NotFoundError') {
+            throw new Error('No se encontró ninguna cámara en este dispositivo.');
+          } else if (fallbackError.name === 'NotReadableError') {
+            throw new Error('La cámara está siendo usada por otra aplicación.');
+          } else {
+            throw new Error(`Error de cámara: ${fallbackError.message}`);
+          }
+        }
+        
         throw new Error('No se pudo acceder a la cámara');
       }
     }
@@ -135,6 +184,10 @@ export class CameraService {
    * Cambia entre cámara frontal y trasera
    */
   async switchCamera(videoElement: HTMLVideoElement, useFrontCamera: boolean): Promise<MediaStream> {
+    if (!videoElement) {
+      throw new Error('Elemento de video no disponible');
+    }
+
     this.stopCamera();
     
     const constraints: MediaStreamConstraints = {
@@ -146,9 +199,25 @@ export class CameraService {
       audio: false
     };
 
-    this.stream = await navigator.mediaDevices.getUserMedia(constraints);
-    videoElement.srcObject = this.stream;
-    
-    return this.stream;
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+      videoElement.srcObject = this.stream;
+      
+      return new Promise((resolve, reject) => {
+        videoElement.onloadedmetadata = () => {
+          videoElement.play().then(() => {
+            resolve(this.stream!);
+          }).catch(reject);
+        };
+        
+        videoElement.onerror = () => {
+          reject(new Error('Error al cambiar de cámara'));
+        };
+      });
+      
+    } catch (error) {
+      console.error('Error switching camera:', error);
+      throw new Error('No se pudo cambiar de cámara');
+    }
   }
 }

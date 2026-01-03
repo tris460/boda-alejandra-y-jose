@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CameraService, CameraPhoto } from '../../services/camera.service';
 
@@ -9,8 +9,8 @@ import { CameraService, CameraPhoto } from '../../services/camera.service';
   templateUrl: './camera-capture.html',
   styleUrl: './camera-capture.scss'
 })
-export class CameraCaptureComponent implements OnInit, OnDestroy {
-  @ViewChild('videoElement', { static: true }) videoElement!: ElementRef<HTMLVideoElement>;
+export class CameraCaptureComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('videoElement', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
   @Output() photoTaken = new EventEmitter<CameraPhoto>();
   @Output() cancelled = new EventEmitter<void>();
 
@@ -19,23 +19,28 @@ export class CameraCaptureComponent implements OnInit, OnDestroy {
   isCapturing = false;
   useFrontCamera = false;
   cameraAvailable = false;
+  viewInitialized = false;
 
   constructor(private cameraService: CameraService) {}
 
-  async ngOnInit() {
-    await this.checkCameraAndStart();
+  ngOnInit() {
+    // Solo verificar disponibilidad de cámara aquí
+    this.checkCameraAvailability();
+  }
+
+  ngAfterViewInit() {
+    this.viewInitialized = true;
+    if (this.cameraAvailable) {
+      this.startCamera();
+    }
   }
 
   ngOnDestroy() {
     this.cameraService.stopCamera();
   }
 
-  private async checkCameraAndStart() {
+  private async checkCameraAvailability() {
     try {
-      this.isLoading = true;
-      this.error = null;
-
-      // Verificar si la cámara está disponible
       this.cameraAvailable = await this.cameraService.isCameraAvailable();
       
       if (!this.cameraAvailable) {
@@ -44,7 +49,30 @@ export class CameraCaptureComponent implements OnInit, OnDestroy {
         return;
       }
 
-      // Iniciar la cámara
+      // Si la vista ya está inicializada, iniciar la cámara
+      if (this.viewInitialized) {
+        this.startCamera();
+      }
+
+    } catch (error) {
+      console.error('Error checking camera availability:', error);
+      this.error = 'Error al verificar la disponibilidad de la cámara';
+      this.isLoading = false;
+    }
+  }
+
+  private async startCamera() {
+    if (!this.videoElement?.nativeElement) {
+      console.error('Video element not available');
+      this.error = 'Error: elemento de video no disponible';
+      this.isLoading = false;
+      return;
+    }
+
+    try {
+      this.isLoading = true;
+      this.error = null;
+
       await this.cameraService.startCamera(this.videoElement.nativeElement);
       this.isLoading = false;
 
@@ -56,7 +84,7 @@ export class CameraCaptureComponent implements OnInit, OnDestroy {
   }
 
   async capturePhoto() {
-    if (this.isCapturing) return;
+    if (this.isCapturing || !this.videoElement?.nativeElement) return;
 
     try {
       this.isCapturing = true;
@@ -73,6 +101,8 @@ export class CameraCaptureComponent implements OnInit, OnDestroy {
   }
 
   async switchCamera() {
+    if (!this.videoElement?.nativeElement) return;
+
     try {
       this.isLoading = true;
       this.useFrontCamera = !this.useFrontCamera;
@@ -95,6 +125,13 @@ export class CameraCaptureComponent implements OnInit, OnDestroy {
   }
 
   retry() {
-    this.checkCameraAndStart();
+    this.error = null;
+    this.isLoading = true;
+    
+    if (this.viewInitialized && this.cameraAvailable) {
+      this.startCamera();
+    } else {
+      this.checkCameraAvailability();
+    }
   }
 }

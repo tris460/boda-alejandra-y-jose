@@ -154,24 +154,22 @@ export class PostWeddingGallery implements OnInit, OnChanges {
       console.log('📊 Storage stats:', stats);
       
       // Probar la Admin API
-      const testMessage = `✅ CLOUDINARY CONFIGURADO CON ADMIN API\n\n` +
+      const testMessage = `✅ CLOUDINARY CONFIGURADO CON NETLIFY FUNCTIONS\n\n` +
         `Cloud Name: ${AppConfig.CLOUDINARY.CLOUD_NAME}\n` +
         `Upload Preset: ${AppConfig.CLOUDINARY.UPLOAD_PRESET}\n` +
-        `API Key: ${AppConfig.CLOUDINARY.API_KEY}\n` +
         `Imágenes en esta sesión: ${stats.count}\n\n` +
-        `🔑 ADMIN API HABILITADA:\n` +
-        `• Acceso completo a todas las imágenes ✅\n` +
+        `🔑 NETLIFY FUNCTIONS HABILITADAS:\n` +
+        `• Acceso seguro a todas las imágenes ✅\n` +
+        `• Credenciales protegidas en el servidor ✅\n` +
         `• Sin problemas de CORS ✅\n` +
-        `• Sin necesidad de Resource List ✅\n` +
         `• Funciona con imágenes existentes ✅\n\n` +
         `🌐 ACCESO PÚBLICO:\n` +
         `• Todas las imágenes son públicas\n` +
         `• Funciona en cualquier dispositivo\n` +
         `• Incluye imágenes anteriores y nuevas\n\n` +
         `🏷️ SISTEMA MEJORADO:\n` +
-        `• Método 1: Admin API (principal)\n` +
-        `• Método 2: Tags (fallback)\n` +
-        `• Método 3: Patrones (último recurso)\n\n` +
+        `• Método 1: Netlify Function (principal)\n` +
+        `• Método 2: Imágenes de sesión (fallback)\n\n` +
         `¡Listo para usar! Sube imágenes y todos las verán.`;
       
       alert(testMessage);
@@ -201,18 +199,17 @@ export class PostWeddingGallery implements OnInit, OnChanges {
   // Método para limpiar el almacenamiento local (información actualizada)
   clearStoredImages() {
     alert(`✅ INFORMACIÓN DEL SISTEMA ACTUAL:\n\n` +
-      `🔑 ADMIN API HABILITADA:\n` +
-      `• Acceso completo a todas las imágenes de Cloudinary\n` +
-      `• Sin limitaciones de Resource List\n` +
+      `🔑 NETLIFY FUNCTIONS HABILITADAS:\n` +
+      `• Acceso seguro a todas las imágenes de Cloudinary\n` +
+      `• Credenciales protegidas en el servidor\n` +
       `• Funciona con imágenes existentes y nuevas\n\n` +
       `🌐 ACCESO PÚBLICO:\n` +
       `• Todas las imágenes son públicas\n` +
       `• Funciona en incógnito y otros dispositivos\n` +
       `• No requiere configuración adicional\n\n` +
       `🔄 SISTEMA DE FALLBACKS:\n` +
-      `• 1º Admin API (principal)\n` +
-      `• 2º Resource List con tags\n` +
-      `• 3º Búsqueda por patrones\n\n` +
+      `• 1º Netlify Function (principal)\n` +
+      `• 2º Imágenes de sesión (fallback)\n\n` +
       `Para eliminar imágenes permanentemente, hazlo desde el dashboard de Cloudinary.`);
   }
 

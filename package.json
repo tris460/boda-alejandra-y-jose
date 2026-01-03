@@ -9,7 +9,7 @@
     "test": "ng test",
     "dev": "netlify dev",
     "build:netlify": "ng build --configuration production",
-    "deploy": "netlify deploy --prod --dir=dist/post-wedding-gallery"
+    "deploy": "netlify deploy --prod --dir=dist/wedding-b-y-e/browser"
   },
   "prettier": {
     "overrides": [

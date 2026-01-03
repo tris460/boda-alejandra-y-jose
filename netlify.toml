@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/post-wedding-gallery"
+  publish = "dist/wedding-b-y-e/browser"
   command = "npm run build"
 
 [functions]

@@ -23,7 +23,7 @@ git push origin main
 3. Conecta tu repositorio de GitHub/GitLab
 4. Configuración de build:
    - **Build command**: `npm run build`
-   - **Publish directory**: `dist/post-wedding-gallery`
+   - **Publish directory**: `dist/wedding-b-y-e/browser`
    - **Functions directory**: `netlify/functions`
 
 ### 3. Configurar variables de entorno en Netlify

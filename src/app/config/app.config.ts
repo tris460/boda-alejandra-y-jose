@@ -3,7 +3,8 @@ export const AppConfig = {
   CLOUDINARY: {
     CLOUD_NAME: 'dryqm0ye4', // Cambiar por tu cloud name
     UPLOAD_PRESET: 'post-wedding-gallery-a-y-j', // Preset sin autenticación
-    API_KEY: '749477636633875' // Solo para lectura
+    API_KEY: '749477636633875' // Solo para referencia, no se usa en el frontend
+    // API_SECRET removido por seguridad - no debe estar en el frontend
   },
   
   // URL de Google Apps Script (backup)

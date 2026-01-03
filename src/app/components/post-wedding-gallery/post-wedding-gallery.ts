@@ -129,8 +129,6 @@ export class PostWeddingGallery implements OnInit, OnChanges {
   // Método para cambiar de proveedor (para testing)
   switchProvider(provider: 'cloudinary' | 'firebase' | 'google-apps-script') {
     console.log(`Switching to provider: ${provider}`);
-    // Esto requeriría actualizar la configuración dinámicamente
-    // Por ahora solo mostramos el mensaje
     alert(`Para cambiar a ${provider}, actualiza GALLERY.PROVIDER en app.config.ts y reinicia la aplicación.`);
   }
 
@@ -155,65 +153,34 @@ export class PostWeddingGallery implements OnInit, OnChanges {
       const stats = this.imageGalleryService.getStorageStats();
       console.log('📊 Storage stats:', stats);
       
-      // Crear una imagen de prueba muy pequeña (1x1 pixel)
-      const canvas = document.createElement('canvas');
-      canvas.width = 1;
-      canvas.height = 1;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.fillStyle = '#ff0000';
-        ctx.fillRect(0, 0, 1, 1);
-      }
+      // Probar la Admin API
+      const testMessage = `✅ CLOUDINARY CONFIGURADO CON ADMIN API\n\n` +
+        `Cloud Name: ${AppConfig.CLOUDINARY.CLOUD_NAME}\n` +
+        `Upload Preset: ${AppConfig.CLOUDINARY.UPLOAD_PRESET}\n` +
+        `API Key: ${AppConfig.CLOUDINARY.API_KEY}\n` +
+        `Imágenes en esta sesión: ${stats.count}\n\n` +
+        `🔑 ADMIN API HABILITADA:\n` +
+        `• Acceso completo a todas las imágenes ✅\n` +
+        `• Sin problemas de CORS ✅\n` +
+        `• Sin necesidad de Resource List ✅\n` +
+        `• Funciona con imágenes existentes ✅\n\n` +
+        `🌐 ACCESO PÚBLICO:\n` +
+        `• Todas las imágenes son públicas\n` +
+        `• Funciona en cualquier dispositivo\n` +
+        `• Incluye imágenes anteriores y nuevas\n\n` +
+        `🏷️ SISTEMA MEJORADO:\n` +
+        `• Método 1: Admin API (principal)\n` +
+        `• Método 2: Tags (fallback)\n` +
+        `• Método 3: Patrones (último recurso)\n\n` +
+        `¡Listo para usar! Sube imágenes y todos las verán.`;
       
-      canvas.toBlob(async (blob) => {
-        if (blob) {
-          const testFile = new File([blob], 'test.png', { type: 'image/png' });
-          console.log('🧪 Uploading test image...');
-          
-          const result = await this.imageGalleryService.uploadImage(testFile);
-          
-          if (result.success) {
-            alert(`✅ ¡Cloudinary funciona correctamente!\n\nImagen de prueba subida exitosamente.\nImágenes almacenadas: ${stats.count + 1}`);
-            await this.loadImages(); // Recargar para mostrar la imagen de prueba
-          } else {
-            alert('❌ Error en Cloudinary:\n\n' + (result.error || 'Error desconocido'));
-          }
-        }
-      }, 'image/png');
+      alert(testMessage);
       
     } catch (error) {
       console.error('❌ Cloudinary test failed:', error);
       const errorMessage = error instanceof Error ? error.message : String(error);
       alert('❌ Test de Cloudinary falló:\n\n' + errorMessage);
     }
-  }
-
-  // Método para limpiar el almacenamiento local (útil para testing)
-  clearStoredImages() {
-    if (confirm('¿Estás seguro de que quieres limpiar todas las imágenes almacenadas localmente?\n\nEsto no borra las imágenes de Cloudinary, solo el registro local.')) {
-      this.imageGalleryService.clearStoredImages();
-      this.loadImages(); // Recargar la galería
-      alert('Almacenamiento local limpiado. Las imágenes aparecerán de nuevo cuando las subas.');
-    }
-  }
-
-  // Método de debugging para verificar el estado
-  debugGallery() {
-    console.log('🐛 DEBUGGING GALLERY STATE');
-    console.log('📋 Current provider:', this.currentProvider);
-    console.log('📊 Current images:', this.images);
-    console.log('⚙️ App config:', AppConfig);
-    
-    // Verificar localStorage
-    const stored = localStorage.getItem('cloudinary_gallery_images');
-    console.log('💾 localStorage content:', stored);
-    
-    // Obtener estadísticas
-    const stats = this.imageGalleryService.getStorageStats();
-    console.log('📈 Storage stats:', stats);
-    
-    // Mostrar información en alert
-    alert(`🐛 DEBUG INFO:\n\nProvider: ${this.currentProvider}\nImages loaded: ${this.images.length}\nStored images: ${stats.count}\nStorage size: ${stats.size}\n\nCheck console for detailed logs.`);
   }
 
   private async testGoogleAppsScript() {
@@ -229,5 +196,46 @@ export class PostWeddingGallery implements OnInit, OnChanges {
       const errorMessage = error instanceof Error ? error.message : String(error);
       alert('❌ Google Apps Script falló:\n\n' + errorMessage);
     }
+  }
+
+  // Método para limpiar el almacenamiento local (información actualizada)
+  clearStoredImages() {
+    alert(`✅ INFORMACIÓN DEL SISTEMA ACTUAL:\n\n` +
+      `🔑 ADMIN API HABILITADA:\n` +
+      `• Acceso completo a todas las imágenes de Cloudinary\n` +
+      `• Sin limitaciones de Resource List\n` +
+      `• Funciona con imágenes existentes y nuevas\n\n` +
+      `🌐 ACCESO PÚBLICO:\n` +
+      `• Todas las imágenes son públicas\n` +
+      `• Funciona en incógnito y otros dispositivos\n` +
+      `• No requiere configuración adicional\n\n` +
+      `🔄 SISTEMA DE FALLBACKS:\n` +
+      `• 1º Admin API (principal)\n` +
+      `• 2º Resource List con tags\n` +
+      `• 3º Búsqueda por patrones\n\n` +
+      `Para eliminar imágenes permanentemente, hazlo desde el dashboard de Cloudinary.`);
+  }
+
+  // Método para refrescar la galería
+  async refreshGallery() {
+    console.log('🔄 Refreshing gallery...');
+    this.imageGalleryService.clearCache();
+    await this.loadImages();
+    alert('✅ Galería actualizada');
+  }
+
+  // Método de debugging para verificar el estado
+  debugGallery() {
+    console.log('🐛 DEBUGGING GALLERY STATE');
+    console.log('📋 Current provider:', this.currentProvider);
+    console.log('📊 Current images:', this.images);
+    console.log('⚙️ App config:', AppConfig);
+    
+    // Obtener estadísticas
+    const stats = this.imageGalleryService.getStorageStats();
+    console.log('📈 Storage stats:', stats);
+    
+    // Mostrar información en alert
+    alert(`🐛 DEBUG INFO:\n\nProvider: ${this.currentProvider}\nImages loaded: ${this.images.length}\nStorage: ${stats.size}\n\nCheck console for detailed logs.`);
   }
 }

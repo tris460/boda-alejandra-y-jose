@@ -1,3 +1,4 @@
+/* Mejorar el scroll general */
 .post-wedding-gallery {
   min-height: 100vh;
   background: linear-gradient(135deg, 
@@ -10,6 +11,30 @@
   padding: 1rem;
   position: relative;
   overflow-y: auto;
+  /* Asegurar que el scroll funcione correctamente */
+  height: 100vh;
+  box-sizing: border-box;
+  /* Mejorar el scroll en todos los navegadores */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Estilos para scrollbar en webkit */
+.post-wedding-gallery::-webkit-scrollbar {
+  width: 8px;
+}
+
+.post-wedding-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-wedding-gallery::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.post-wedding-gallery::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* Gallery Header */
@@ -118,7 +143,10 @@
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 2rem 0 4rem 0; /* Agregar padding bottom para scroll */
+  /* Asegurar que el grid no cause problemas de scroll */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .image-card {
@@ -128,12 +156,16 @@
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Mantener el estilo base siempre */
+  will-change: transform, box-shadow;
 }
 
 .image-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   background: rgba(255, 255, 255, 0.15);
+  /* Asegurar que no se pierdan los estilos base */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .image-container {
@@ -148,9 +180,12 @@
   object-fit: cover;
   cursor: pointer;
   transition: transform 0.3s ease;
+  /* Evitar que la imagen se deforme */
+  display: block;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.image-card:hover .gallery-image {
+.image-container:hover .gallery-image {
   transform: scale(1.05);
 }
 
@@ -163,9 +198,11 @@
   padding: 2rem 1.5rem 1.5rem;
   transform: translateY(100%);
   transition: transform 0.3s ease;
+  /* Asegurar que el overlay no interfiera con el scroll */
+  pointer-events: none;
 }
 
-.image-card:hover .image-overlay {
+.image-container:hover .image-overlay {
   transform: translateY(0);
 }
 
@@ -301,6 +338,8 @@
 @media (max-width: 768px) {
   .post-wedding-gallery {
     padding: 0.5rem;
+    /* Mejorar scroll en móviles */
+    -webkit-overflow-scrolling: touch;
   }
 
   .gallery-header {
@@ -318,7 +357,7 @@
   .gallery-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
-    padding: 1rem 0;
+    padding: 1rem 0 3rem 0; /* Más padding para scroll */
   }
 
   .upload-btn {
@@ -335,15 +374,36 @@
     width: 35px;
     height: 35px;
   }
+
+  /* Mejorar hover en móviles */
+  .image-card:hover {
+    transform: none; /* Desactivar hover en móviles */
+  }
+  
+  .image-container:hover .gallery-image {
+    transform: none;
+  }
+  
+  .image-container:hover .image-overlay {
+    transform: translateY(0); /* Mantener overlay visible en móviles */
+  }
 }
 
 @media (max-width: 480px) {
   .gallery-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+    padding: 1rem 0 3rem 0; /* Asegurar padding para scroll */
   }
 
   .gallery-title {
     font-size: 2rem;
+  }
+  
+  /* En móviles pequeños, mostrar siempre la información de la imagen */
+  .image-overlay {
+    transform: translateY(0);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    padding: 1.5rem 1rem 1rem;
   }
 }

@@ -218,7 +218,13 @@ export class PostWeddingGallery implements OnInit, OnChanges {
     console.log('🔄 Refreshing gallery...');
     this.imageGalleryService.clearCache();
     await this.loadImages();
-    alert('✅ Galería actualizada');
+    
+    // Mostrar mensaje de confirmación más discreto
+    const message = `✅ Galería actualizada - ${this.images.length} imágenes encontradas`;
+    console.log(message);
+    
+    // Opcional: mostrar toast en lugar de alert
+    // alert('✅ Galería actualizada');
   }
 
   // Método de debugging para verificar el estado

@@ -65,9 +65,13 @@
 /* Upload Section */
 .upload-section {
   margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.upload-btn {
+.upload-btn, .refresh-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
@@ -84,22 +88,26 @@
   backdrop-filter: blur(10px);
 }
 
-.upload-btn:hover:not(:disabled) {
+.upload-btn:hover:not(:disabled), .refresh-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.upload-btn:disabled {
+.upload-btn:disabled, .refresh-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.upload-icon {
+.upload-icon, .refresh-icon {
   width: 24px;
   height: 24px;
   fill: currentColor;
+}
+
+.refresh-icon.spinning {
+  animation: spin 1s linear infinite;
 }
 
 /* Loading Spinner */
@@ -139,12 +147,11 @@
 /* Gallery Grid */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 0 4rem 0; /* Agregar padding bottom para scroll */
-  /* Asegurar que el grid no cause problemas de scroll */
+  padding: 2rem 0 4rem 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -156,75 +163,21 @@
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  /* Mantener el estilo base siempre */
-  will-change: transform, box-shadow;
-}
-
-.image-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  background: rgba(255, 255, 255, 0.15);
-  /* Asegurar que no se pierdan los estilos base */
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .image-container {
   position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
+  width: 100%;
 }
 
 .gallery-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  /* Evitar que la imagen se deforme */
   display: block;
   background: rgba(255, 255, 255, 0.1);
-}
-
-.image-container:hover .gallery-image {
-  transform: scale(1.05);
-}
-
-.image-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 2rem 1.5rem 1.5rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-  /* Asegurar que el overlay no interfiera con el scroll */
-  pointer-events: none;
-}
-
-.image-container:hover .image-overlay {
-  transform: translateY(0);
-}
-
-.image-info {
-  color: #ffffff;
-}
-
-.image-name {
-  font-family: var(--font-text);
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.upload-date {
-  font-family: var(--font-text);
-  font-size: 0.9rem;
-  opacity: 0.8;
-  margin: 0;
 }
 
 /* Empty State */
@@ -355,14 +308,18 @@
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
-    padding: 1rem 0 3rem 0; /* Más padding para scroll */
+    padding: 1rem 0 3rem 0;
   }
 
-  .upload-btn {
+  .upload-btn, .refresh-btn {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
+  }
+
+  .upload-section {
+    gap: 0.75rem;
   }
 
   .image-modal {
@@ -373,19 +330,6 @@
     top: -40px;
     width: 35px;
     height: 35px;
-  }
-
-  /* Mejorar hover en móviles */
-  .image-card:hover {
-    transform: none; /* Desactivar hover en móviles */
-  }
-  
-  .image-container:hover .gallery-image {
-    transform: none;
-  }
-  
-  .image-container:hover .image-overlay {
-    transform: translateY(0); /* Mantener overlay visible en móviles */
   }
 }
 
@@ -398,12 +342,5 @@
 
   .gallery-title {
     font-size: 2rem;
-  }
-  
-  /* En móviles pequeños, mostrar siempre la información de la imagen */
-  .image-overlay {
-    transform: translateY(0);
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
-    padding: 1.5rem 1rem 1rem;
   }
 }

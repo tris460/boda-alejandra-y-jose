@@ -26,19 +26,25 @@
   </div>
 
   <!-- Camera View -->
-  <div class="camera-view" *ngIf="!isLoading && !error">
-    <!-- Video Element -->
-    <div class="video-container">
+  <div class="camera-view" *ngIf="!error">
+    <!-- Video Element - Siempre presente pero oculto cuando está cargando -->
+    <div class="video-container" [style.visibility]="isLoading ? 'hidden' : 'visible'">
       <video #videoElement autoplay playsinline muted></video>
       
       <!-- Camera Overlay -->
-      <div class="camera-overlay">
+      <div class="camera-overlay" *ngIf="!isLoading">
         <div class="viewfinder"></div>
       </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="camera-loading-overlay" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p>Iniciando cámara...</p>
+    </div>
+
     <!-- Camera Controls -->
-    <div class="camera-controls">
+    <div class="camera-controls" *ngIf="!isLoading">
       <!-- Switch Camera Button -->
       <button class="switch-camera-btn" (click)="switchCamera()" *ngIf="cameraAvailable">
         <svg viewBox="0 0 24 24">

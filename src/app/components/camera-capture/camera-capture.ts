@@ -24,15 +24,25 @@ export class CameraCaptureComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(private cameraService: CameraService) {}
 
   ngOnInit() {
+    console.log('Camera component initialized');
     // Solo verificar disponibilidad de cámara aquí
     this.checkCameraAvailability();
   }
 
   ngAfterViewInit() {
+    console.log('Camera component view initialized');
     this.viewInitialized = true;
-    if (this.cameraAvailable) {
-      this.startCamera();
-    }
+    
+    // Esperar un poco más para asegurar que el DOM esté listo
+    setTimeout(() => {
+      console.log('Attempting to start camera...');
+      console.log('Camera available:', this.cameraAvailable);
+      console.log('Video element exists:', !!this.videoElement?.nativeElement);
+      
+      if (this.cameraAvailable && !this.error) {
+        this.startCamera();
+      }
+    }, 300);
   }
 
   ngOnDestroy() {
@@ -62,9 +72,23 @@ export class CameraCaptureComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private async startCamera() {
+    // Verificar múltiples veces que el elemento esté disponible
+    let attempts = 0;
+    const maxAttempts = 10;
+    
+    while (attempts < maxAttempts) {
+      if (this.videoElement?.nativeElement) {
+        break;
+      }
+      
+      console.log(`Waiting for video element, attempt ${attempts + 1}`);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      attempts++;
+    }
+
     if (!this.videoElement?.nativeElement) {
-      console.error('Video element not available');
-      this.error = 'Error: elemento de video no disponible';
+      console.error('Video element not available after waiting');
+      this.error = 'Error: No se pudo inicializar la cámara. Intenta recargar la página.';
       this.isLoading = false;
       return;
     }
@@ -73,6 +97,7 @@ export class CameraCaptureComponent implements OnInit, AfterViewInit, OnDestroy 
       this.isLoading = true;
       this.error = null;
 
+      console.log('Starting camera with video element:', this.videoElement.nativeElement);
       await this.cameraService.startCamera(this.videoElement.nativeElement);
       this.isLoading = false;
 
@@ -125,13 +150,21 @@ export class CameraCaptureComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   retry() {
+    console.log('Retrying camera initialization...');
+    console.log('View initialized:', this.viewInitialized);
+    console.log('Camera available:', this.cameraAvailable);
+    console.log('Video element:', this.videoElement?.nativeElement);
+    
     this.error = null;
     this.isLoading = true;
     
-    if (this.viewInitialized && this.cameraAvailable) {
-      this.startCamera();
-    } else {
-      this.checkCameraAvailability();
-    }
+    // Reinicializar completamente
+    setTimeout(() => {
+      if (this.viewInitialized && this.cameraAvailable) {
+        this.startCamera();
+      } else {
+        this.checkCameraAvailability();
+      }
+    }, 200);
   }
 }

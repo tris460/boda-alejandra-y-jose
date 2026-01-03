@@ -128,6 +128,8 @@ export class TranslationService {
       'gallery.loadingImages': 'Cargando imágenes...',
       'gallery.noImages': 'No hay imágenes aún',
       'gallery.noImagesDescription': 'Sé el primero en compartir un momento especial de nuestra boda',
+      'update': 'Actualizar',
+      'developed': 'Desarrollado por'
     },
     en: {
       'home.phrase': 'Together is a beautiful place to be. Join us as we say ‘I do’!',
@@ -245,6 +247,8 @@ export class TranslationService {
       'gallery.loadingImages': 'Loading images...',
       'gallery.noImages': 'No images yet',
       'gallery.noImagesDescription': 'Be the first to share a special moment from our wedding',
+      'update': 'Update',
+      'developed': 'Developed by'
     }
   };
 

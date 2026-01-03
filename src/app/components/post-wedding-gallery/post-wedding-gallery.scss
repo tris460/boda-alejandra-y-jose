@@ -152,7 +152,7 @@
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 0 4rem 0;
+  padding: 2rem 0 4rem 0px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -306,7 +306,7 @@
 
   .gallery-grid {
     gap: 1.5rem;
-    padding: 1rem 0 3rem 0;
+    padding: 1rem 0 4rem 0;
   }
 
   .post-wedding-gallery .gallery-grid .image-card {
@@ -336,7 +336,7 @@
 @media (max-width: 480px) {
   .gallery-grid {
     gap: 1rem;
-    padding: 1rem 0 3rem 0;
+    padding: 1rem 0 4rem 0;
   }
 
   .post-wedding-gallery .gallery-grid .image-card {

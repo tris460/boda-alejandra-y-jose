@@ -2,15 +2,8 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { TranslationService } from '../../services/translation.service';
+import { ImageGalleryService, GalleryImage } from '../../services/image-gallery.service';
 import { AppConfig } from '../../config/app.config';
-
-interface GalleryImage {
-  id: string;
-  url: string;
-  name: string;
-  uploadDate: Date;
-  thumbnail?: string;
-}
 
 @Component({
   selector: 'app-post-wedding-gallery',
@@ -27,19 +20,20 @@ export class PostWeddingGallery implements OnInit, OnChanges {
   isUploading = false;
   selectedImage: GalleryImage | null = null;
   
-  // URL del Google Apps Script para manejar imágenes
-  private readonly APPS_SCRIPT_URL = AppConfig.GOOGLE_APPS_SCRIPT_URL;
+  // Información del proveedor actual
+  currentProvider = AppConfig.GALLERY.PROVIDER;
 
-  constructor(private translationService: TranslationService) {}
+  constructor(
+    private translationService: TranslationService,
+    private imageGalleryService: ImageGalleryService
+  ) {}
 
   ngOnInit() {
-    // Asegurar que el servicio de traducción use el idioma correcto
     this.translationService.setLanguage(this.currentLanguage);
     this.loadImages();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Actualizar el idioma cuando cambie el input
     if (changes['currentLanguage'] && !changes['currentLanguage'].firstChange) {
       this.translationService.setLanguage(this.currentLanguage);
     }
@@ -47,55 +41,17 @@ export class PostWeddingGallery implements OnInit, OnChanges {
 
   async loadImages() {
     this.isLoading = true;
+    console.log(`🔄 Loading images using provider: ${this.currentProvider}`);
+    
     try {
-      // Usar JSONP para evitar problemas de CORS
-      const data = await this.makeJsonpRequest(`${this.APPS_SCRIPT_URL}?action=getImages`);
-      
-      if (data.status === 'success') {
-        this.images = data.images.map((img: any) => ({
-          id: img.id,
-          url: img.url,
-          name: img.name,
-          uploadDate: new Date(img.uploadDate),
-          thumbnail: img.thumbnail
-        }));
-      } else {
-        console.error('Error from server:', data.message);
-      }
+      this.images = await this.imageGalleryService.getImages();
+      console.log(`✅ Successfully loaded ${this.images.length} images:`, this.images);
     } catch (error) {
-      console.error('Error loading images:', error);
+      console.error('❌ Error loading images:', error);
+      this.images = [];
     } finally {
       this.isLoading = false;
     }
-  }
-
-  // Función para hacer requests JSONP
-  private makeJsonpRequest(url: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-      
-      // Crear el script tag
-      const script = document.createElement('script');
-      script.src = url + '&callback=' + callbackName;
-      
-      // Crear la función callback global
-      (window as any)[callbackName] = (data: any) => {
-        // Limpiar
-        document.head.removeChild(script);
-        delete (window as any)[callbackName];
-        resolve(data);
-      };
-      
-      // Manejar errores
-      script.onerror = () => {
-        document.head.removeChild(script);
-        delete (window as any)[callbackName];
-        reject(new Error('JSONP request failed'));
-      };
-      
-      // Agregar el script al DOM
-      document.head.appendChild(script);
-    });
   }
 
   onFileSelected(event: Event) {
@@ -125,39 +81,26 @@ export class PostWeddingGallery implements OnInit, OnChanges {
     }
 
     this.isUploading = true;
+    console.log(`Uploading image using provider: ${this.currentProvider}`);
     
     try {
-      // Convertir archivo a base64
-      const base64 = await this.fileToBase64(file);
+      const result = await this.imageGalleryService.uploadImage(file);
       
-      const formData = {
-        action: 'uploadImage',
-        fileName: file.name,
-        fileData: base64,
-        mimeType: file.type,
-        uploadDate: new Date().toISOString()
-      };
-
-      const response = await fetch(this.APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-      
-      if (result.status === 'success') {
-        // Recargar imágenes para mostrar la nueva
-        await this.loadImages();
+      if (result.success && result.image) {
         alert('¡Imagen subida exitosamente!');
+        await this.loadImages(); // Recargar la galería
       } else {
-        throw new Error(result.message || 'Error al subir la imagen');
+        throw new Error(result.error || 'Error desconocido al subir la imagen');
       }
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Error al subir la imagen. Por favor intenta de nuevo.');
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      
+      if (this.currentProvider === 'cloudinary') {
+        alert(`Error al subir imagen a Cloudinary:\n\n${errorMessage}\n\nVerifica tu configuración de Cloudinary en app.config.ts`);
+      } else {
+        alert(`Error al subir imagen:\n\n${errorMessage}`);
+      }
     } finally {
       this.isUploading = false;
     }
@@ -167,25 +110,11 @@ export class PostWeddingGallery implements OnInit, OnChanges {
     return AppConfig.GALLERY.ALLOWED_TYPES.includes(file.type);
   }
 
-  private fileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const result = reader.result as string;
-        // Remover el prefijo "data:image/...;base64,"
-        const base64 = result.split(',')[1];
-        resolve(base64);
-      };
-      reader.onerror = error => reject(error);
-    });
-  }
-
   goBack() {
     window.history.back();
   }
 
-  trackByImageId(index: number, image: GalleryImage): string {
+  trackByImageId(_index: number, image: GalleryImage): string {
     return image.id;
   }
 
@@ -195,5 +124,110 @@ export class PostWeddingGallery implements OnInit, OnChanges {
 
   closeImageModal() {
     this.selectedImage = null;
+  }
+
+  // Método para cambiar de proveedor (para testing)
+  switchProvider(provider: 'cloudinary' | 'firebase' | 'google-apps-script') {
+    console.log(`Switching to provider: ${provider}`);
+    // Esto requeriría actualizar la configuración dinámicamente
+    // Por ahora solo mostramos el mensaje
+    alert(`Para cambiar a ${provider}, actualiza GALLERY.PROVIDER en app.config.ts y reinicia la aplicación.`);
+  }
+
+  // Método para probar la conexión del proveedor actual
+  async testCurrentProvider() {
+    console.log(`🧪 Testing ${this.currentProvider} provider...`);
+    
+    if (this.currentProvider === 'cloudinary') {
+      await this.testCloudinary();
+    } else if (this.currentProvider === 'google-apps-script') {
+      await this.testGoogleAppsScript();
+    } else {
+      alert(`Testing para ${this.currentProvider} no implementado aún.`);
+    }
+  }
+
+  private async testCloudinary() {
+    try {
+      console.log('🧪 Testing Cloudinary configuration...');
+      
+      // Mostrar estadísticas del almacenamiento local
+      const stats = this.imageGalleryService.getStorageStats();
+      console.log('📊 Storage stats:', stats);
+      
+      // Crear una imagen de prueba muy pequeña (1x1 pixel)
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#ff0000';
+        ctx.fillRect(0, 0, 1, 1);
+      }
+      
+      canvas.toBlob(async (blob) => {
+        if (blob) {
+          const testFile = new File([blob], 'test.png', { type: 'image/png' });
+          console.log('🧪 Uploading test image...');
+          
+          const result = await this.imageGalleryService.uploadImage(testFile);
+          
+          if (result.success) {
+            alert(`✅ ¡Cloudinary funciona correctamente!\n\nImagen de prueba subida exitosamente.\nImágenes almacenadas: ${stats.count + 1}`);
+            await this.loadImages(); // Recargar para mostrar la imagen de prueba
+          } else {
+            alert('❌ Error en Cloudinary:\n\n' + (result.error || 'Error desconocido'));
+          }
+        }
+      }, 'image/png');
+      
+    } catch (error) {
+      console.error('❌ Cloudinary test failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert('❌ Test de Cloudinary falló:\n\n' + errorMessage);
+    }
+  }
+
+  // Método para limpiar el almacenamiento local (útil para testing)
+  clearStoredImages() {
+    if (confirm('¿Estás seguro de que quieres limpiar todas las imágenes almacenadas localmente?\n\nEsto no borra las imágenes de Cloudinary, solo el registro local.')) {
+      this.imageGalleryService.clearStoredImages();
+      this.loadImages(); // Recargar la galería
+      alert('Almacenamiento local limpiado. Las imágenes aparecerán de nuevo cuando las subas.');
+    }
+  }
+
+  // Método de debugging para verificar el estado
+  debugGallery() {
+    console.log('🐛 DEBUGGING GALLERY STATE');
+    console.log('📋 Current provider:', this.currentProvider);
+    console.log('📊 Current images:', this.images);
+    console.log('⚙️ App config:', AppConfig);
+    
+    // Verificar localStorage
+    const stored = localStorage.getItem('cloudinary_gallery_images');
+    console.log('💾 localStorage content:', stored);
+    
+    // Obtener estadísticas
+    const stats = this.imageGalleryService.getStorageStats();
+    console.log('📈 Storage stats:', stats);
+    
+    // Mostrar información en alert
+    alert(`🐛 DEBUG INFO:\n\nProvider: ${this.currentProvider}\nImages loaded: ${this.images.length}\nStored images: ${stats.count}\nStorage size: ${stats.size}\n\nCheck console for detailed logs.`);
+  }
+
+  private async testGoogleAppsScript() {
+    // Mantener el método original para Google Apps Script
+    console.log('🧪 INICIANDO PRUEBA DE GOOGLE APPS SCRIPT');
+    
+    try {
+      const images = await this.imageGalleryService.getImages();
+      console.log('✅ Google Apps Script test successful:', images);
+      alert(`✅ ¡Google Apps Script funciona!\n\nImágenes encontradas: ${images.length}`);
+    } catch (error) {
+      console.error('❌ Google Apps Script test failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert('❌ Google Apps Script falló:\n\n' + errorMessage);
+    }
   }
 }

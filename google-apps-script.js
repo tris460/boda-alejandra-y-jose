@@ -1,11 +1,44 @@
 /**
- * Google Apps Script para manejar las respuestas RSVP
- * Este script recibe los datos del formulario y los guarda en la hoja de cálculo
+ * Google Apps Script para manejar RSVP y Galería Post-Boda
+ * Este script maneja tanto las respuestas RSVP como las imágenes de la galería
  */
 
-// Función para manejar requests GET (para compatibilidad)
+// ID de la carpeta de Google Drive donde se almacenarán las imágenes
+const DRIVE_FOLDER_ID = '1Wn8l8MDtP2PUxsij_By-JEHt3zNBQnT1';
+
+// Función para manejar requests GET (JSONP compatible)
 function doGet(e) {
-  return handleRequest(e.parameter);
+  const params = e.parameter || {};
+  const callback = params.callback;
+  
+  console.log('GET Request params:', params);
+  
+  let response;
+  
+  // Manejar diferentes acciones
+  if (params.test) {
+    response = handleTestRequest(params);
+  } else if (params.action === 'getImages') {
+    response = handleGetImages();
+  } else if (params.action === 'uploadImage') {
+    response = handleImageUpload(params);
+  } else {
+    // Fallback a RSVP para compatibilidad
+    response = handleRSVPRequest(params);
+  }
+  
+  // Si hay callback, devolver JSONP
+  if (callback) {
+    const jsonpResponse = callback + '(' + JSON.stringify(response) + ');';
+    return ContentService
+      .createTextOutput(jsonpResponse)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  
+  // Si no hay callback, devolver JSON normal
+  return ContentService
+    .createTextOutput(JSON.stringify(response))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // Función para manejar requests POST
@@ -35,17 +68,142 @@ function doPost(e) {
     params = { ...params, ...e.parameter };
   }
   
-  return handleRequest(params);
+  return handleRSVPRequest(params);
 }
 
-// Función principal que maneja la lógica
-function handleRequest(params) {
+// Función para manejar requests de prueba
+function handleTestRequest(params) {
+  console.log('Test request received:', params);
+  
+  if (params.test === 'simple') {
+    return {
+      status: 'success',
+      message: 'Google Apps Script está funcionando correctamente',
+      timestamp: new Date().toISOString(),
+      testType: 'simple'
+    };
+  } else if (params.test === 'jsonp') {
+    return {
+      status: 'success',
+      message: 'JSONP está funcionando correctamente',
+      timestamp: new Date().toISOString(),
+      testType: 'jsonp',
+      callback: params.callback || 'no callback provided'
+    };
+  }
+  
+  return {
+    status: 'success',
+    message: 'Test genérico exitoso',
+    params: params
+  };
+}
+
+// Función para obtener las imágenes de la galería
+function handleGetImages() {
+  try {
+    console.log('Getting images from Drive folder:', DRIVE_FOLDER_ID);
+    
+    const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+    const files = folder.getFiles();
+    const images = [];
+    
+    while (files.hasNext()) {
+      const file = files.next();
+      const mimeType = file.getBlob().getContentType();
+      
+      // Solo procesar archivos de imagen
+      if (mimeType.startsWith('image/')) {
+        images.push({
+          id: file.getId(),
+          name: file.getName(),
+          url: `https://drive.google.com/uc?id=${file.getId()}`,
+          thumbnail: `https://drive.google.com/thumbnail?id=${file.getId()}&sz=w400`,
+          uploadDate: file.getDateCreated().toISOString(),
+          size: file.getSize(),
+          mimeType: mimeType
+        });
+      }
+    }
+    
+    console.log(`Found ${images.length} images`);
+    
+    return {
+      status: 'success',
+      images: images,
+      count: images.length,
+      timestamp: new Date().toISOString()
+    };
+    
+  } catch (error) {
+    console.error('Error getting images:', error);
+    return {
+      status: 'error',
+      message: 'Error al obtener las imágenes: ' + error.toString(),
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+
+// Función para subir una imagen
+function handleImageUpload(params) {
+  try {
+    console.log('Uploading image:', params.fileName);
+    
+    if (!params.fileData || !params.fileName || !params.mimeType) {
+      throw new Error('Faltan datos requeridos: fileData, fileName, mimeType');
+    }
+    
+    // Decodificar el archivo base64
+    const fileBlob = Utilities.newBlob(
+      Utilities.base64Decode(params.fileData),
+      params.mimeType,
+      params.fileName
+    );
+    
+    // Obtener la carpeta de destino
+    const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+    
+    // Crear el archivo en Drive
+    const file = folder.createFile(fileBlob);
+    
+    // Hacer el archivo público para visualización
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    
+    console.log('Image uploaded successfully:', file.getId());
+    
+    return {
+      status: 'success',
+      message: 'Imagen subida exitosamente',
+      image: {
+        id: file.getId(),
+        name: file.getName(),
+        url: `https://drive.google.com/uc?id=${file.getId()}`,
+        thumbnail: `https://drive.google.com/thumbnail?id=${file.getId()}&sz=w400`,
+        uploadDate: file.getDateCreated().toISOString(),
+        size: file.getSize()
+      },
+      timestamp: new Date().toISOString()
+    };
+    
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    return {
+      status: 'error',
+      message: 'Error al subir la imagen: ' + error.toString(),
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+
+// Función principal que maneja la lógica de RSVP (mantenida para compatibilidad)
+function handleRSVPRequest(params) {
   try {
     // ID de tu hoja de cálculo (extraído de la URL)
     const SPREADSHEET_ID = '1Cn4uviDanHrnTMM4X6Z8m6E1fMDHVwAOS-zVTyagTyo';
     
     // Log para debugging
-    console.log('Parámetros recibidos:', params);
+    console.log('Parámetros RSVP recibidos:', params);
     
     // Abrir la hoja de cálculo
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -79,12 +237,10 @@ function handleRequest(params) {
     // Validar que tenemos los datos mínimos necesarios
     if (!params.nombre || !params.asistencia) {
       console.error('Faltan datos requeridos:', params);
-      return ContentService
-        .createTextOutput(JSON.stringify({
-          status: 'error',
-          message: 'Faltan datos requeridos: nombre y asistencia son obligatorios'
-        }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return {
+        status: 'error',
+        message: 'Faltan datos requeridos: nombre y asistencia son obligatorios'
+      };
     }
     
     // Preparar los datos para insertar
@@ -121,27 +277,23 @@ function handleRequest(params) {
     });
     
     // Respuesta exitosa
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: 'success',
-        message: 'Respuesta guardada correctamente',
-        row: lastRow,
-        data: rowData
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return {
+      status: 'success',
+      message: 'Respuesta guardada correctamente',
+      row: lastRow,
+      data: rowData
+    };
       
   } catch (error) {
     // Log del error
-    console.error('Error en handleRequest:', error);
+    console.error('Error en handleRSVPRequest:', error);
     
     // Respuesta de error
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: 'error',
-        message: 'Error interno del servidor: ' + error.toString(),
-        stack: error.stack
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return {
+      status: 'error',
+      message: 'Error interno del servidor: ' + error.toString(),
+      stack: error.stack
+    };
   }
 }
 
@@ -160,8 +312,8 @@ function testScript() {
   };
   
   // Ejecutar la función
-  const result = handleRequest(testParams);
-  console.log('Resultado de prueba:', result.getContent());
+  const result = handleRSVPRequest(testParams);
+  console.log('Resultado de prueba:', result);
 }
 
 /**

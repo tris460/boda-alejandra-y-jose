@@ -144,10 +144,11 @@
   font-size: 1.1rem;
 }
 
-/* Gallery Grid */
+/* Gallery Flex Layout */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto;
@@ -160,9 +161,10 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   overflow: hidden;
-  transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 350px; /* Ancho fijo */
+  flex-shrink: 0; /* No permitir que se encoja */
 }
 
 .image-container {
@@ -172,9 +174,8 @@
 
 .gallery-image {
   width: 100%;
-  height: auto;
-  max-height: 500px;
-  object-fit: contain;
+  height: auto; /* Alto completamente automático */
+  object-fit: contain; /* No recortar nunca */
   cursor: pointer;
   display: block;
   background: rgba(255, 255, 255, 0.1);
@@ -270,23 +271,6 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-.modal-info {
-  margin-top: 1rem;
-  text-align: center;
-  color: #ffffff;
-}
-
-.modal-info h4 {
-  font-family: var(--font-title);
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.modal-info p {
-  font-family: var(--font-text);
-  opacity: 0.8;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .post-wedding-gallery {
@@ -308,9 +292,12 @@
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
     padding: 1rem 0 3rem 0;
+  }
+
+  .image-card {
+    width: 280px; /* Ancho más pequeño en móviles */
   }
 
   .upload-btn, .refresh-btn {
@@ -335,9 +322,13 @@
 
 @media (max-width: 480px) {
   .gallery-grid {
-    grid-template-columns: 1fr;
     gap: 1rem;
-    padding: 1rem 0 3rem 0; /* Asegurar padding para scroll */
+    padding: 1rem 0 3rem 0;
+  }
+
+  .image-card {
+    width: calc(100vw - 2rem); /* Ancho completo menos padding en móviles pequeños */
+    max-width: 350px;
   }
 
   .gallery-title {

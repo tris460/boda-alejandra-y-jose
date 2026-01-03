@@ -151,14 +151,21 @@ video {
     inset 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-/* Camera Controls */
+/* Camera Controls - Superpuestos sobre el video */
 .camera-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.8);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
   backdrop-filter: blur(10px);
+  z-index: 20;
+  /* Hacer que los controles estén más arriba */
+  bottom: 10vh; /* 10% desde abajo en lugar de 0 */
 }
 
 .switch-camera-btn, .cancel-btn {
@@ -201,6 +208,9 @@ video {
   align-items: center;
   justify-content: center;
   position: relative;
+  /* Área de toque más grande en móviles */
+  padding: 10px;
+  margin: -10px;
 }
 
 .capture-btn:hover:not(:disabled) {
@@ -288,6 +298,7 @@ video {
 
   .camera-controls {
     padding: 1.5rem;
+    bottom: 8vh; /* Más arriba en tablets */
   }
 
   .capture-btn {
@@ -314,6 +325,9 @@ video {
 
   .camera-controls {
     padding: 1rem;
+    bottom: 5vh; /* Aún más arriba en móviles */
+    /* Hacer el gradiente más pronunciado en móviles */
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
   }
 
   .error-actions {
